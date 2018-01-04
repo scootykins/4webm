@@ -1,0 +1,23 @@
+{
+  "name": "4chan-webm-player",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Philip Scott <pscott@zeptohost.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "./bin/www",
+    "dev": "nodemon ./bin/www --ignore /static --ignore client/",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "4chan-list-webm": "^2.0.0",
+    "axios": "^0.17.1",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "buble-loader": "^0.4.1",
+    "nodemon": "^1.14.7",
+    "webpack": "^3.10.0"
+  }
+}
