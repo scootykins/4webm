@@ -946,6 +946,7 @@ var axios = __webpack_require__(9)
 var $ = function (x) { return document.querySelector(x); }
 var $player = $('#player')
 var $source = $('#player-source')
+var $playlist = $('#playlist')
 var urlRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
 
 var playlist
@@ -976,6 +977,22 @@ $player.addEventListener('canplay', $player.play)
 function makePlaylist (webms) {
   i = 0
   playlist = webms
+
+  playlist.forEach(function (elem, i) {
+    console.log('aa')
+    var $a = document.createElement('a')
+
+    $a.id = i
+    $a.innerHTML = i + ". " + (elem.filename) + ".webm"
+    $a.addEventListener('click', function (_) {
+      i = parseInt($a.id)
+      $source.src = playlist[i].url
+      $player.load()
+    })
+    $playlist.appendChild($a)
+    $playlist.appendChild(document.createElement('br'))
+  })
+
   if (playlist.length > 0) {
     $source.src = playlist[0].url 
     $player.load()

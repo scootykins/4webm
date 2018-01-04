@@ -2,6 +2,7 @@ const axios = require('axios')
 const $ = x => document.querySelector(x)
 const $player = $('#player')
 const $source = $('#player-source')
+const $playlist = $('#playlist')
 const urlRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
 
 let playlist
@@ -30,6 +31,22 @@ $player.addEventListener('canplay', $player.play)
 function makePlaylist (webms) {
   i = 0
   playlist = webms
+
+  playlist.forEach((elem, i) => {
+    console.log('aa')
+    const $a = document.createElement('a')
+
+    $a.id = i
+    $a.innerHTML = `${i}. ${elem.filename}.webm`
+    $a.addEventListener('click', _ => {
+      i = parseInt($a.id)
+      $source.src = playlist[i].url
+      $player.load()
+    })
+    $playlist.appendChild($a)
+    $playlist.appendChild(document.createElement('br'))
+  })
+
   if (playlist.length > 0) {
     $source.src = playlist[0].url 
     $player.load()
