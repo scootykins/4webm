@@ -11,7 +11,7 @@
     "build": "webpack"
   },
   "dependencies": {
-    "4chan-list-webm": "^2.0.0",
+    "4chan-list-webm": "^2.0.1",
     "axios": "^0.17.1",
     "express": "^4.16.2"
   },
