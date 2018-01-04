@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"4chan-list-webm@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/4chan-list-webm/-/4chan-list-webm-2.0.0.tgz#28d32864cf45ba5e836905aa6d60279338ad72b1"
+"4chan-list-webm@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/4chan-list-webm/-/4chan-list-webm-2.0.1.tgz#fde738b60c5dd42b2ac5ee262d99fbfce7c624fd"
   dependencies:
     axios "^0.17.1"
 
