@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const http = require('http')
+const app = require('../app')
+const server = http.createServer(app)
+const webport = process.env.PORT || 8080
+
+server.listen(webport, () => {
+  console.log(`Listening on port ${webport}`)
+})
+
