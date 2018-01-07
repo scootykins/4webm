@@ -5,8 +5,8 @@ const $source = $('#player-source')
 const $playlist = $('#playlist')
 const urlRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
 
-let playlist
-let i
+let index
+let webms
 
 $('#submit-url').addEventListener('click', () => {
   const url = $('#thread-url').value
@@ -17,38 +17,51 @@ $('#submit-url').addEventListener('click', () => {
     .catch(console.log)
 })
 
-$player.addEventListener('ended', () => {
-  i += 1
-  if (i == playlist.length) {
-    i = 0
-  }
-  $source.src = playlist[i].url
-  $player.load()
-})
-
 $player.addEventListener('canplay', $player.play)
+$player.addEventListener('ended', playNext)
 
-function makePlaylist (webms) {
-  i = 0
-  playlist = webms
+function makePlaylist (newWebms) {
+  webms = newWebms
+  index = 0
+  resetPlaylistDOM()
+  
+  if (webms.length > 0) {
+    generatePlaylistDOM(webms)
+    $source.src = webms[index].url 
+    $player.load()
+    console.log(index)
+  }
+}
 
-  playlist.forEach((elem, i) => {
-    console.log('aa')
+function playNext () {
+  index += 1
+  if (index == webms.length) {
+    index = 0
+  }
+  $source.src = webms[index].url
+  $player.load()
+  console.log(index)
+}
+
+function generatePlaylistDOM (webms) {
+  webms.forEach((elem, i) => {
     const $a = document.createElement('a')
 
     $a.id = i
-    $a.innerHTML = `${i}. ${elem.filename}.webm`
+    $a.innerHTML = `${i+1}. ${elem.filename}.webm`
     $a.addEventListener('click', _ => {
-      i = parseInt($a.id)
-      $source.src = playlist[i].url
+      index = i 
+      $source.src = webms[index].url
       $player.load()
+      console.log(index)
     })
     $playlist.appendChild($a)
     $playlist.appendChild(document.createElement('br'))
   })
+}
 
-  if (playlist.length > 0) {
-    $source.src = playlist[0].url 
-    $player.load()
+function resetPlaylistDOM () {
+  while ($playlist.firstChild) {
+    $playlist.removeChild($playlist.firstChild)
   }
 }
