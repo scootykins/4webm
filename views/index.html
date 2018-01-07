@@ -6,16 +6,32 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h1>4chan webm player</h1>
-    <h3>By <a href="https://github.com/ScottyFillups">ScottyFillups</a></h3>
-    <video id="player" width="650" height="400" controls>
-      <source id="player-source" src="" />
-      Your browser does not support the video tag! ;-;
-    </video>
-    <br />
-    <input id="thread-url" size="45" placeholder="Enter a thread URL" />
-    <button id="submit-url">Load webms!</button>
-    <div id="playlist"></div>
+    <div class="boardBanner">
+      <div id="bannerCnt" class="title desktop">
+        <img alt="4chan" src="http://s.4cdn.org/image/title/262.png" />
+      </div>
+      <div class="boardTitle">4chan webm player</div>
+      <div class="boardSubtitle">
+        4chan webm player, nor its creator, are associated with 4chan.org<br />
+        Please consider giving me a <a href="https://github.com/ScottyFillups/4chan-webm-player">star</a> :)
+      </div>
+    </div>
+    <hr class="abovePostForm" />
+    <div id="togglePostFormLink" class="desktop">
+      [<a href="#">Generate a New Playlist</a>]
+      <form 
+      <input id="thread-url" size="45" placeholder="Enter a thread URL" />
+      <button id="submit-url">Load webms!</button>
+
+    </div>
+    <hr />
+    <div id="playerCnt">
+      <video id="player" width="650" height="400" controls>
+        <source id="player-source" src="" />
+        Your browser does not support the video tag! ;-;
+      </video>
+    </div>
+        <div id="playlist"></div>
     <script src="./bundle.js"></script>
   </body>
 </html>
