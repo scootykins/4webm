@@ -952,7 +952,6 @@ var urlRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
 var index
 var webms
 
-get4chanBanner()
 $player.addEventListener('canplay', $player.play)
 $player.addEventListener('ended', playNext)
 $('#submit-url').addEventListener('click', function () {
@@ -1020,12 +1019,6 @@ function resetPlaylistDOM () {
   while ($playlist.firstChild) {
     $playlist.removeChild($playlist.firstChild)
   }
-}
-
-function get4chanBanner () {
-  var BANNER_LIMIT = 262
-  var bannerNum = Math.floor(Math.random() * BANNER_LIMIT) + 1
-  $('#banner').src = "http://s.4cdn.org/image/title/" + bannerNum + ".png"
 }
 
 
