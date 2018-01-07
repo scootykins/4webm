@@ -20,6 +20,21 @@ $('#submit-url').addEventListener('click', () => {
 $player.addEventListener('canplay', $player.play)
 $player.addEventListener('ended', playNext)
 
+function loadVideo () {
+  Array.from($playlist.childNodes)
+    .filter(x => x.tagName === 'A')
+    .forEach((elem, i) => {
+      if (index === i) {
+        elem.classList.add("current-video")
+      } else {
+        elem.classList.remove("current-video")
+      }
+    })
+
+  $source.src = webms[index].url
+  $player.load()
+}
+
 function makePlaylist (newWebms) {
   webms = newWebms
   index = 0
@@ -27,9 +42,7 @@ function makePlaylist (newWebms) {
   
   if (webms.length > 0) {
     generatePlaylistDOM(webms)
-    $source.src = webms[index].url 
-    $player.load()
-    console.log(index)
+    loadVideo()
   }
 }
 
@@ -38,9 +51,7 @@ function playNext () {
   if (index == webms.length) {
     index = 0
   }
-  $source.src = webms[index].url
-  $player.load()
-  console.log(index)
+  loadVideo()
 }
 
 function generatePlaylistDOM (webms) {
@@ -51,9 +62,7 @@ function generatePlaylistDOM (webms) {
     $a.innerHTML = `${i+1}. ${elem.filename}.webm`
     $a.addEventListener('click', _ => {
       index = i 
-      $source.src = webms[index].url
-      $player.load()
-      console.log(index)
+      loadVideo()
     })
     $playlist.appendChild($a)
     $playlist.appendChild(document.createElement('br'))
