@@ -1,4 +1,23 @@
 .current-video {
-  color: red
+  color: red;
 }
-
+.hide {
+  display: none;
+}
+#thread-form {
+  text-align: center;
+}
+#playlist {
+  height: 380px;
+  display: inline-block;
+  overflow: auto;
+  padding: 10px;
+  text-align: left;
+}
+.body-cnt {
+  text-align: center;
+}
+.body-cnt > * {
+  margin: 5px;
+  border: 1px solid #800;
+}

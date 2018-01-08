@@ -10,24 +10,34 @@ let webms
 
 $player.addEventListener('canplay', $player.play)
 $player.addEventListener('ended', playNext)
-$('#submit-url').addEventListener('click', () => {
+$('#submit-url').addEventListener('click', loadThread)
+$('#thread-form').addEventListener('submit', e => {
+  e.preventDefault()
+  loadThread()
+})
+$('#gen-playlist').addEventListener('click', () => {
+  $('#thread-form').classList.remove('hide')
+  $('#togglePostFormLink').classList.add('hide')
+})
+
+
+function loadThread () {
   const url = $('#thread-url').value
   const [, board, threadNo] = urlRegex.exec(url)
 
   axios.get(`/enqueue/${board}/${threadNo}`)
     .then(res => makePlaylist(res.data))
     .catch(console.log)
-})
-
+}
 
 function loadVideo () {
   Array.from($playlist.childNodes)
     .filter(x => x.tagName === 'A')
     .forEach((elem, i) => {
       if (index === i) {
-        elem.classList.add("current-video")
+        elem.classList.add('current-video')
       } else {
-        elem.classList.remove("current-video")
+        elem.classList.remove('current-video')
       }
     })
 
