@@ -954,7 +954,18 @@ var webms
 
 $player.addEventListener('canplay', $player.play)
 $player.addEventListener('ended', playNext)
-$('#submit-url').addEventListener('click', function () {
+$('#submit-url').addEventListener('click', loadThread)
+$('#thread-form').addEventListener('submit', function (e) {
+  e.preventDefault()
+  loadThread()
+})
+$('#gen-playlist').addEventListener('click', function () {
+  $('#thread-form').classList.remove('hide')
+  $('#togglePostFormLink').classList.add('hide')
+})
+
+
+function loadThread () {
   var url = $('#thread-url').value
   var ref = urlRegex.exec(url);
   var board = ref[1];
@@ -963,17 +974,16 @@ $('#submit-url').addEventListener('click', function () {
   axios.get(("/enqueue/" + board + "/" + threadNo))
     .then(function (res) { return makePlaylist(res.data); })
     .catch(console.log)
-})
-
+}
 
 function loadVideo () {
   Array.from($playlist.childNodes)
     .filter(function (x) { return x.tagName === 'A'; })
     .forEach(function (elem, i) {
       if (index === i) {
-        elem.classList.add("current-video")
+        elem.classList.add('current-video')
       } else {
-        elem.classList.remove("current-video")
+        elem.classList.remove('current-video')
       }
     })
 
