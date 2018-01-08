@@ -947,11 +947,12 @@ var $ = function (x) { return document.querySelector(x); }
 var $player = $('#player')
 var $source = $('#player-source')
 var $playlist = $('#playlist')
-var urlRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
+var chanRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
 
 var index
 var webms
 
+loadThreadFromURL()
 $player.addEventListener('canplay', $player.play)
 $player.addEventListener('ended', playNext)
 $('#submit-url').addEventListener('click', loadThread)
@@ -964,10 +965,23 @@ $('#gen-playlist').addEventListener('click', function () {
   $('#togglePostFormLink').classList.add('hide')
 })
 
+// i'll refactor later
+function loadThreadFromURL () {
+  if (window.location.pathname !== '/') {
+    var paramRegex = /(.*)\/thread\/(.*)/
+    var ref = paramRegex.exec(window.location.pathname);
+    var board = ref[1];
+    var threadNo = ref[2];
+
+    axios.get(("/enqueue/" + board + "/" + threadNo))
+      .then(function (res) { return makePlaylist(res.data); })
+      .catch(console.log)
+  }
+}
 
 function loadThread () {
   var url = $('#thread-url').value
-  var ref = urlRegex.exec(url);
+  var ref = chanRegex.exec(url);
   var board = ref[1];
   var threadNo = ref[2];
 
