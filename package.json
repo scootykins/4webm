@@ -13,7 +13,8 @@
   "dependencies": {
     "4chan-list-webm": "^2.0.1",
     "axios": "^0.17.1",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "limiter": "^1.1.2"
   },
   "devDependencies": {
     "buble-loader": "^0.4.1",
