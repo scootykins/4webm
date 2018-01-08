@@ -3,11 +3,12 @@ const $ = x => document.querySelector(x)
 const $player = $('#player')
 const $source = $('#player-source')
 const $playlist = $('#playlist')
-const urlRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
+const chanRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
 
 let index
 let webms
 
+loadThreadFromURL()
 $player.addEventListener('canplay', $player.play)
 $player.addEventListener('ended', playNext)
 $('#submit-url').addEventListener('click', loadThread)
@@ -20,10 +21,21 @@ $('#gen-playlist').addEventListener('click', () => {
   $('#togglePostFormLink').classList.add('hide')
 })
 
+// i'll refactor later
+function loadThreadFromURL () {
+  if (window.location.pathname !== '/') {
+    const paramRegex = /(.*)\/thread\/(.*)/
+    const [, board, threadNo] = paramRegex.exec(window.location.pathname)
+
+    axios.get(`/enqueue/${board}/${threadNo}`)
+      .then(res => makePlaylist(res.data))
+      .catch(console.log)
+  }
+}
 
 function loadThread () {
   const url = $('#thread-url').value
-  const [, board, threadNo] = urlRegex.exec(url)
+  const [, board, threadNo] = chanRegex.exec(url)
 
   axios.get(`/enqueue/${board}/${threadNo}`)
     .then(res => makePlaylist(res.data))
