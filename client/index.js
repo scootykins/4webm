@@ -11,7 +11,6 @@ let webms
 loadThreadFromURL()
 $player.addEventListener('canplay', $player.play)
 $player.addEventListener('ended', playNext)
-$('#submit-url').addEventListener('click', loadThread)
 $('#thread-form').addEventListener('submit', e => {
   e.preventDefault()
   loadThread()
@@ -37,6 +36,7 @@ function loadThread () {
   const url = $('#thread-url').value
   const [, board, threadNo] = chanRegex.exec(url)
 
+  console.log('send get req')
   axios.get(`/enqueue/${board}/${threadNo}`)
     .then(res => makePlaylist(res.data))
     .catch(console.log)
