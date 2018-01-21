@@ -71,7 +71,7 @@
 
 
 var bind = __webpack_require__(2);
-var isBuffer = __webpack_require__(11);
+var isBuffer = __webpack_require__(12);
 
 /*global toString:true*/
 
@@ -383,7 +383,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(13);
+var normalizeHeaderName = __webpack_require__(14);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -695,12 +695,12 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(14);
-var buildURL = __webpack_require__(16);
-var parseHeaders = __webpack_require__(17);
-var isURLSameOrigin = __webpack_require__(18);
+var settle = __webpack_require__(15);
+var buildURL = __webpack_require__(17);
+var parseHeaders = __webpack_require__(18);
+var isURLSameOrigin = __webpack_require__(19);
 var createError = __webpack_require__(5);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(19);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(20);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -797,7 +797,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(20);
+      var cookies = __webpack_require__(21);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -882,7 +882,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(15);
+var enhanceError = __webpack_require__(16);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -940,120 +940,150 @@ module.exports = Cancel;
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var axios = __webpack_require__(9)
-var $ = function (x) { return document.querySelector(x); }
-var $player = $('#player')
-var $source = $('#player-source')
-var $playlist = $('#playlist')
-var chanRegex = /http:\/\/boards.4chan.org\/(.*)\/thread\/(.*)/
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__player__ = __webpack_require__(9);
 
-var index
-var webms
 
-loadThreadFromURL()
-$player.addEventListener('canplay', $player.play)
-$player.addEventListener('ended', playNext)
-$('#submit-url').addEventListener('click', loadThread)
+var $ = document.querySelector.bind(document)
+var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
+  video: $('#player'),
+  source: $('#player-source'),
+  playlist: $('#playlist')
+})
+
+if (window.location.pathname !== '/') {
+  player.load(window.location.pathname)
+}
+
 $('#thread-form').addEventListener('submit', function (e) {
   e.preventDefault()
-  loadThread()
+  player.load($('#thread-url').value)
 })
+
 $('#gen-playlist').addEventListener('click', function () {
   $('#thread-form').classList.remove('hide')
   $('#togglePostFormLink').classList.add('hide')
 })
 
-// i'll refactor later
-function loadThreadFromURL () {
-  if (window.location.pathname !== '/') {
-    var paramRegex = /(.*)\/thread\/(.*)/
-    var ref = paramRegex.exec(window.location.pathname);
-    var board = ref[1];
-    var threadNo = ref[2];
 
-    axios.get(("/enqueue/" + board + "/" + threadNo))
-      .then(function (res) { return makePlaylist(res.data); })
-      .catch(console.log)
-  }
-}
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function loadThread () {
-  var url = $('#thread-url').value
-  var ref = chanRegex.exec(url);
-  var board = ref[1];
-  var threadNo = ref[2];
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
-  axios.get(("/enqueue/" + board + "/" + threadNo))
-    .then(function (res) { return makePlaylist(res.data); })
+
+var Player = function Player (dom) {
+  this._dom = dom
+  this._index = 0
+  this._webms = []
+
+  this._dom.video.addEventListener('canplay', this._dom.video.play)
+  this._dom.video.addEventListener('ended', this.next.bind(this))
+};
+
+Player.prototype.load = function load (threadUrl) {
+    var this$1 = this;
+
+  var threadRegex = /http:\/\/boards.4(webm|chan).org\/(.*)\/(.*)/
+  var ref = threadRegex.exec(threadUrl);
+    var board = ref[2];
+    var threadNo = ref[3];
+
+  this._resetPlaylist()
+
+  __WEBPACK_IMPORTED_MODULE_0_axios__["get"](("/enqueue/" + board + "/" + threadNo))
+    .then(function (res) {
+      this$1._webms = res.data
+      this$1._genPlaylist()
+      this$1.goto(0)
+    })
     .catch(console.log)
-}
+};
 
-function loadVideo () {
-  Array.from($playlist.childNodes)
+Player.prototype.play = function play () {
+  this._dom.source.src = this._webms[this._index].url
+  this._currPlaylist()
+  this._dom.video.load()
+};
+
+Player.prototype.goto = function goto (index) {
+  this._index = index
+  this.play()
+};
+
+Player.prototype.next = function next () {
+  if (this._webms.length - 1 > this._index) {
+    this.goto(this._index + 1)
+  } else {
+    this.goto(0)
+  }
+};
+
+Player.prototype.prev = function prev () {
+  if (this._index > 0) {
+    this.goto(this._index - 1)
+  } else {
+    this.goto(this._webms.length - 1)
+  }
+};
+
+Player.prototype._genPlaylist = function _genPlaylist () {
+    var this$1 = this;
+
+  this._webms.forEach(function (elem, i) {
+    var a = document.createElement('a')
+
+    a.id = this$1._index
+    a.innerHTML = (i + 1) + ". " + (elem.filename) + ".webm"
+    a.addEventListener('click', function () {
+      this$1._index = i
+      this$1.play()
+    })
+
+    this$1._dom.playlist.appendChild(a)
+    this$1._dom.playlist.appendChild(document.createElement('br'))
+  })
+};
+
+Player.prototype._currPlaylist = function _currPlaylist () {
+    var this$1 = this;
+
+  Array.from(this._dom.playlist.childNodes)
     .filter(function (x) { return x.tagName === 'A'; })
     .forEach(function (elem, i) {
-      if (index === i) {
+      if (this$1._index === i) {
         elem.classList.add('current-video')
       } else {
         elem.classList.remove('current-video')
       }
     })
+};
 
-  $source.src = webms[index].url
-  $player.load()
-}
+Player.prototype._resetPlaylist = function _resetPlaylist () {
+    var this$1 = this;
 
-function makePlaylist (newWebms) {
-  webms = newWebms
-  index = 0
-  resetPlaylistDOM()
-  
-  if (webms.length > 0) {
-    generatePlaylistDOM(webms)
-    loadVideo()
+  while (this._dom.playlist.firstChild) {
+    this$1._dom.playlist.removeChild(this$1._dom.playlist.firstChild)
   }
-}
+};
 
-function playNext () {
-  index += 1
-  if (index == webms.length) {
-    index = 0
-  }
-  loadVideo()
-}
+/* harmony default export */ __webpack_exports__["a"] = (Player);
 
-function generatePlaylistDOM (webms) {
-  webms.forEach(function (elem, i) {
-    var $a = document.createElement('a')
-
-    $a.id = i
-    $a.innerHTML = (i+1) + ". " + (elem.filename) + ".webm"
-    $a.addEventListener('click', function (_) {
-      index = i 
-      loadVideo()
-    })
-    $playlist.appendChild($a)
-    $playlist.appendChild(document.createElement('br'))
-  })
-}
-
-function resetPlaylistDOM () {
-  while ($playlist.firstChild) {
-    $playlist.removeChild($playlist.firstChild)
-  }
-}
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(10);
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(11);
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1061,7 +1091,7 @@ module.exports = __webpack_require__(10);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(2);
-var Axios = __webpack_require__(12);
+var Axios = __webpack_require__(13);
 var defaults = __webpack_require__(1);
 
 /**
@@ -1096,14 +1126,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(7);
-axios.CancelToken = __webpack_require__(26);
+axios.CancelToken = __webpack_require__(27);
 axios.isCancel = __webpack_require__(6);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(27);
+axios.spread = __webpack_require__(28);
 
 module.exports = axios;
 
@@ -1112,7 +1142,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /*!
@@ -1139,7 +1169,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1147,8 +1177,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(1);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(21);
-var dispatchRequest = __webpack_require__(22);
+var InterceptorManager = __webpack_require__(22);
+var dispatchRequest = __webpack_require__(23);
 
 /**
  * Create a new instance of Axios
@@ -1225,7 +1255,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1244,7 +1274,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1277,7 +1307,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1305,7 +1335,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1380,7 +1410,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1440,7 +1470,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1515,7 +1545,7 @@ module.exports = (
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1558,7 +1588,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1618,7 +1648,7 @@ module.exports = (
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1677,18 +1707,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(23);
+var transformData = __webpack_require__(24);
 var isCancel = __webpack_require__(6);
 var defaults = __webpack_require__(1);
-var isAbsoluteURL = __webpack_require__(24);
-var combineURLs = __webpack_require__(25);
+var isAbsoluteURL = __webpack_require__(25);
+var combineURLs = __webpack_require__(26);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1770,7 +1800,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1797,7 +1827,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1818,7 +1848,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1839,7 +1869,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1903,7 +1933,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
