@@ -10,7 +10,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'buble-loader'
+        loader: 'buble-loader',
       }
     ]
   }

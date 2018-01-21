@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "./bin/www",
-    "dev": "nodemon ./bin/www --ignore /static --ignore client/",
+    "dev": "nodemon ./bin/www --ignore /static --ignore /client",
     "watch": "webpack --watch",
     "build": "webpack"
   },
