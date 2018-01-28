@@ -945,27 +945,28 @@ module.exports = Cancel;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__player__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(30);
 
 
-var $ = document.querySelector.bind(document)
+
 var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
-  video: $('#player'),
-  source: $('#player-source'),
-  playlist: $('#playlist')
+  video: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player'),
+  source: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player-source'),
+  playlist: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#playlist')
 })
 
 if (window.location.pathname !== '/') {
   player.load(window.location.pathname)
 }
 
-$('#thread-form').addEventListener('submit', function (e) {
+Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').addEventListener('submit', function (e) {
   e.preventDefault()
-  player.load($('#thread-url').value)
+  player.load(Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-url').value)
 })
 
-$('#gen-playlist').addEventListener('click', function () {
-  $('#thread-form').classList.remove('hide')
-  $('#togglePostFormLink').classList.add('hide')
+Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEventListener('click', function () {
+  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').classList.remove('hide')
+  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#togglePostFormLink').classList.add('hide')
 })
 
 
@@ -976,15 +977,21 @@ $('#gen-playlist').addEventListener('click', function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__playlist__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(30);
+
+
 
 
 var Player = function Player (dom) {
-  this._dom = dom
+  this._$video = dom.video
+  this._$source = dom.source
   this._index = 0
-  this._webms = []
+  this._webmUrls = []
+  this._playlist = new __WEBPACK_IMPORTED_MODULE_1__playlist__["a" /* default */](dom.playlist)
 
-  this._dom.video.addEventListener('canplay', this._dom.video.play)
-  this._dom.video.addEventListener('ended', this.next.bind(this))
+  this._$video.addEventListener('canplay', this._$video.play)
+  this._$video.addEventListener('ended', this.next.bind(this))
 };
 
 Player.prototype.load = function load (threadUrl) {
@@ -995,82 +1002,45 @@ Player.prototype.load = function load (threadUrl) {
     var board = ref[2];
     var threadNo = ref[3];
 
-  this._resetPlaylist()
+  this._playlist.reset()
 
   __WEBPACK_IMPORTED_MODULE_0_axios__["get"](("/enqueue/" + board + "/" + threadNo))
     .then(function (res) {
-      this$1._webms = res.data
-      this$1._genPlaylist()
-      this$1.goto(0)
+      var collect = Object(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* collector */])(res.data)
+      this$1._webmUrls = collect('url')
+      this$1._playlist.gen(collect('filename'), this$1.play.bind(this$1))
+      this$1.play(0)
     })
     .catch(console.log)
 };
 
-Player.prototype.play = function play () {
-  this._dom.source.src = this._webms[this._index].url
-  this._currPlaylist()
-  this._dom.video.load()
-};
 
-Player.prototype.goto = function goto (index) {
+Player.prototype.play = function play (index) {
+  this._playlist.update(index)
   this._index = index
-  this.play()
+  this._play()
 };
 
 Player.prototype.next = function next () {
-  if (this._webms.length - 1 > this._index) {
-    this.goto(this._index + 1)
+  if (this._webmUrls.length - 1 > this._index) {
+    this.play(this._index + 1)
   } else {
-    this.goto(0)
+    this.play(0)
   }
 };
 
 Player.prototype.prev = function prev () {
   if (this._index > 0) {
-    this.goto(this._index - 1)
+    this.play(this._index - 1)
   } else {
-    this.goto(this._webms.length - 1)
+    this.play(this._webmUrls.length - 1)
   }
 };
 
-Player.prototype._genPlaylist = function _genPlaylist () {
-    var this$1 = this;
-
-  this._webms.forEach(function (elem, i) {
-    var a = document.createElement('a')
-
-    a.id = this$1._index
-    a.innerHTML = (i + 1) + ". " + (elem.filename) + ".webm"
-    a.addEventListener('click', function () {
-      this$1._index = i
-      this$1.play()
-    })
-
-    this$1._dom.playlist.appendChild(a)
-    this$1._dom.playlist.appendChild(document.createElement('br'))
-  })
-};
-
-Player.prototype._currPlaylist = function _currPlaylist () {
-    var this$1 = this;
-
-  Array.from(this._dom.playlist.childNodes)
-    .filter(function (x) { return x.tagName === 'A'; })
-    .forEach(function (elem, i) {
-      if (this$1._index === i) {
-        elem.classList.add('current-video')
-      } else {
-        elem.classList.remove('current-video')
-      }
-    })
-};
-
-Player.prototype._resetPlaylist = function _resetPlaylist () {
-    var this$1 = this;
-
-  while (this._dom.playlist.firstChild) {
-    this$1._dom.playlist.removeChild(this$1._dom.playlist.firstChild)
-  }
+Player.prototype._play = function _play () {
+  this._$source.src = this._webmUrls[this._index]
+  this._playlist.update(this._index)
+  this._$video.load()
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Player);
@@ -1964,6 +1934,73 @@ module.exports = function spread(callback) {
     return callback.apply(null, arr);
   };
 };
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var Playlist = function Playlist ($playlist) {
+  this._$playlist = $playlist
+};
+
+Playlist.prototype.gen = function gen (filenames, handler) {
+    var this$1 = this;
+
+  filenames.forEach(function (filename, i) {
+    var $a = document.createElement('a')
+
+    $a.innerHTML = (i + 1) + ". " + filename + ".webm"
+    $a.addEventListener('click', function () { return handler(i); })
+
+    this$1._$playlist.appendChild($a)
+    this$1._$playlist.appendChild(document.createElement('br'))
+  })
+};
+
+Playlist.prototype.update = function update (index, classname) {
+    if ( classname === void 0 ) classname = 'active';
+
+  Array.from(this._$playlist.childNodes)
+    .filter(function (x) { return x.tagName === 'A'; })
+    .forEach(function (elem, i) {
+      if (index === i) {
+        elem.classList.add(classname)
+      } else {
+        elem.classList.remove(classname)
+      }
+    })
+};
+
+Playlist.prototype.reset = function reset () {
+    var this$1 = this;
+
+  while(this._$playlist.firstCild) {
+    this$1._$playlist.removeChild(this$1._$playlist.firstChild)
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (Playlist);
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = $;
+/* harmony export (immutable) */ __webpack_exports__["b"] = collector;
+function $ (selector) {
+  return document.querySelector(selector)
+}
+
+function collector (arr) {
+  return function collect (key) {
+    return arr.map(function (obj) { return obj[key]; })
+  }
+}
+
 
 
 /***/ })
