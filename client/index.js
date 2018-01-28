@@ -1,6 +1,6 @@
 import Player from './player'
+import { $ } from './util'
 
-const $ = document.querySelector.bind(document)
 const player = new Player({
   video: $('#player'),
   source: $('#player-source'),
