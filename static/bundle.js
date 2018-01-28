@@ -989,6 +989,7 @@ var Player = function Player (dom) {
   this._index = 0
   this._webmUrls = []
   this._playlist = new __WEBPACK_IMPORTED_MODULE_1__playlist__["a" /* default */](dom.playlist)
+  this._thumbnails = false
 
   this._$video.addEventListener('canplay', this._$video.play)
   this._$video.addEventListener('ended', this.next.bind(this))
@@ -1008,7 +1009,11 @@ Player.prototype.load = function load (threadUrl) {
     .then(function (res) {
       var collect = Object(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* collector */])(res.data)
       this$1._webmUrls = collect('url')
-      this$1._playlist.gen(collect('filename'), this$1.play.bind(this$1))
+      this$1._playlist.gen(
+        collect('filename'),
+        collect('thumbnail'),
+        this$1.play.bind(this$1)
+      )
       this$1.play(0)
     })
     .catch(console.log)
@@ -1035,6 +1040,16 @@ Player.prototype.prev = function prev () {
   } else {
     this.play(this._webmUrls.length - 1)
   }
+};
+
+Player.prototype.showThumbnails = function showThumbnails () {
+  this._thumbnails = true
+  this._playlist.showThumbnails()
+};
+
+Player.prototype.hideThumbnails = function hideThumbnails () {
+  this._thumbnails = false
+  this._playlist.hideThumbnails()
 };
 
 Player.prototype._play = function _play () {
@@ -1943,18 +1958,23 @@ module.exports = function spread(callback) {
 "use strict";
 var Playlist = function Playlist ($playlist) {
   this._$playlist = $playlist
+  this._$imgs = []
 };
 
-Playlist.prototype.gen = function gen (filenames, handler) {
+Playlist.prototype.gen = function gen (filenames, thumbnails, handler) {
     var this$1 = this;
 
   filenames.forEach(function (filename, i) {
     var $a = document.createElement('a')
+    var $img = document.createElement('img')
 
     $a.innerHTML = (i + 1) + ". " + filename + ".webm"
     $a.addEventListener('click', function () { return handler(i); })
 
+    $img.src = thumbnails[i]
+
     this$1._$playlist.appendChild($a)
+    this$1._$playlist.appendChild($img)
     this$1._$playlist.appendChild(document.createElement('br'))
   })
 };
@@ -1979,6 +1999,18 @@ Playlist.prototype.reset = function reset () {
   while(this._$playlist.firstCild) {
     this$1._$playlist.removeChild(this$1._$playlist.firstChild)
   }
+};
+
+Playlist.prototype.showThumbnails = function showThumbnails () {
+  $imgs.forEach(function ($img) {
+    $img.classList.remove('hide')
+  })
+};
+
+Playlist.prototype.hideThumbnails = function hideThumbnails () {
+  $imgs.forEach(function ($img) {
+    $img.classList.add('hide')
+  })
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Playlist);

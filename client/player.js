@@ -9,6 +9,7 @@ class Player {
     this._index = 0
     this._webmUrls = []
     this._playlist = new Playlist(dom.playlist)
+    this._thumbnails = false
 
     this._$video.addEventListener('canplay', this._$video.play)
     this._$video.addEventListener('ended', this.next.bind(this))
@@ -24,7 +25,11 @@ class Player {
       .then(res => {
         const collect = collector(res.data)
         this._webmUrls = collect('url')
-        this._playlist.gen(collect('filename'), this.play.bind(this))
+        this._playlist.gen(
+          collect('filename'),
+          collect('thumbnail'),
+          this.play.bind(this)
+        )
         this.play(0)
       })
       .catch(console.log)
@@ -51,6 +56,16 @@ class Player {
     } else {
       this.play(this._webmUrls.length - 1)
     }
+  }
+
+  showThumbnails () {
+    this._thumbnails = true
+    this._playlist.showThumbnails()
+  }
+
+  hideThumbnails () {
+    this._thumbnails = false
+    this._playlist.hideThumbnails()
   }
 
   _play () {
