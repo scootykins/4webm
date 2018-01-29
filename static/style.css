@@ -21,3 +21,16 @@
   margin: 5px;
   border: 1px solid #800;
 }
+
+.thumbnail {
+  max-width: 128px;
+  max-height: 128px;
+}
+.webm-link {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+} 
+.playlist-item {
+  margin: 5px;
+}
