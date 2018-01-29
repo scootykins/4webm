@@ -10,7 +10,8 @@
 #playlist {
   height: 380px;
   display: inline-block;
-  overflow: auto;
+  overflow-y: auto;
+  width: 400px;
   padding: 10px;
   text-align: left;
 }
@@ -27,6 +28,8 @@
   max-height: 128px;
 }
 .webm-link {
+  width: 55%;
+  word-wrap: break-word;
   display: inline-block;
   vertical-align: top;
   margin: 10px;
