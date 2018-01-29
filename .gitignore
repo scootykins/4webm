@@ -1,6 +1,7 @@
 /node_modules
 /thumbnail
 *.swo
+dump.rdb
 *.swp
 *.log
 TODO.md
