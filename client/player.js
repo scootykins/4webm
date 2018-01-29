@@ -25,6 +25,7 @@ class Player {
       .then(res => {
         const collect = collector(res.data)
         this._webmUrls = collect('url')
+        this._playlist.reset()
         this._playlist.gen(
           collect('filename'),
           collect('thumbnail'),

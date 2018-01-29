@@ -4,4 +4,6 @@ function collector (arr) {
   }
 }
 
-module.exports = collector
+module.exports = {
+  Collector: collector
+}

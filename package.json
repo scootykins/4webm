@@ -16,6 +16,7 @@
     "download": "^6.2.5",
     "express": "^4.16.2",
     "limiter": "^1.1.2",
+    "redis": "^2.8.0",
     "timeout-as-promise": "^1.0.0"
   },
   "devDependencies": {
