@@ -8,7 +8,7 @@ const player = new Player({
 })
 
 if (window.location.pathname !== '/') {
-  player.load(window.location.pathname)
+  player.load(window.location.href)
 }
 
 $('#thread-form').addEventListener('submit', e => {
