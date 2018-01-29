@@ -1967,14 +1967,21 @@ Playlist.prototype.gen = function gen (filenames, thumbnails, handler) {
   filenames.forEach(function (filename, i) {
     var $a = document.createElement('a')
     var $img = document.createElement('img')
+    var $div = document.createElement('div')
 
     $a.innerHTML = (i + 1) + ". " + filename + ".webm"
+    $a.className = 'webm-link'
     $a.addEventListener('click', function () { return handler(i); })
 
     $img.src = thumbnails[i]
+    $img.className = 'thumbnail'
+    $img.addEventListener('click', function () { return handler(i); })
 
-    this$1._$playlist.appendChild($a)
-    this$1._$playlist.appendChild($img)
+    $div.className = 'playlist-item'
+    $div.appendChild($img)
+    $div.appendChild($a)
+
+    this$1._$playlist.appendChild($div)
     this$1._$playlist.appendChild(document.createElement('br'))
   })
 };

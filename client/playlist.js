@@ -8,14 +8,21 @@ class Playlist {
     filenames.forEach((filename, i) => {
       const $a = document.createElement('a')
       const $img = document.createElement('img')
+      const $div = document.createElement('div')
 
       $a.innerHTML = `${i + 1}. ${filename}.webm`
+      $a.className = 'webm-link'
       $a.addEventListener('click', () => handler(i))
 
       $img.src = thumbnails[i]
+      $img.className = 'thumbnail'
+      $img.addEventListener('click', () => handler(i))
 
-      this._$playlist.appendChild($a)
-      this._$playlist.appendChild($img)
+      $div.className = 'playlist-item'
+      $div.appendChild($img)
+      $div.appendChild($a)
+
+      this._$playlist.appendChild($div)
       this._$playlist.appendChild(document.createElement('br'))
     })
   }
