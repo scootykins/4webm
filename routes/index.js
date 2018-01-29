@@ -1,7 +1,16 @@
-const router = require('express').Router()
+const { Router } = require('express')
+const home = require('./home')
+const enqueue = require('./enqueue')
+const thumbnail = require('./thumbnail')
 
-router.use('/', require('./home'))
-router.use('/enqueue', require('./enqueue'))
-router.use('/thumbnail', require('./thumbnail'))
+function getRouter (redis) {
+  const router = Router()
 
-module.exports = router
+  router.use('/', home)
+  router.use('/enqueue', enqueue(redis))
+  router.use('/thumbnail', thumbnail)
+
+  return router
+}
+
+module.exports = getRouter

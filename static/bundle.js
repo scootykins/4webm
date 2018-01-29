@@ -1009,6 +1009,7 @@ Player.prototype.load = function load (threadUrl) {
     .then(function (res) {
       var collect = Object(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* collector */])(res.data)
       this$1._webmUrls = collect('url')
+      this$1._playlist.reset()
       this$1._playlist.gen(
         collect('filename'),
         collect('thumbnail'),
@@ -2003,7 +2004,7 @@ Playlist.prototype.update = function update (index, classname) {
 Playlist.prototype.reset = function reset () {
     var this$1 = this;
 
-  while(this._$playlist.firstCild) {
+  while(this._$playlist.firstChild) {
     this$1._$playlist.removeChild(this$1._$playlist.firstChild)
   }
 };

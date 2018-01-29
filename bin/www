@@ -1,11 +1,17 @@
 #!/usr/bin/env node
 
-const http = require('http')
-const app = require('../app')
-const server = http.createServer(app)
-const webport = process.env.PORT || 8080
+const webPort = process.env.PORT || 8080
+const redisPort = process.env.REDIS_URL || 6379
 
-server.listen(webport, () => {
-  console.log(`Listening on port ${webport}`)
+const http = require('http')
+const redis = require('redis')
+const App = require('../app')
+
+const redisClient = redis.createClient(redisPort)
+const app = App(redisClient)
+const server = http.createServer(app)
+
+server.listen(webPort, () => {
+  console.log(`Listening on port ${webPort}`)
 })
 
