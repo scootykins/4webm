@@ -1,16 +1,11 @@
+'use strict'
+
 const { Router } = require('express')
-const home = require('./home')
-const enqueue = require('./enqueue')
-const thumbnail = require('./thumbnail')
 
-function getRouter (redis) {
-  const router = Router()
+const router = Router()
 
-  router.use('/', home)
-  router.use('/enqueue', enqueue(redis))
-  router.use('/thumbnail', thumbnail)
+router.use('/', require('./home'))
+router.use('/enqueue', require('./enqueue'))
+router.use('/thumbnail', require('./thumbnail'))
 
-  return router
-}
-
-module.exports = getRouter
+module.exports = router

@@ -1,3 +1,5 @@
+'use strict'
+
 class Playlist {
   constructor ($playlist) {
     this._$playlist = $playlist
