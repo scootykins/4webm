@@ -1,3 +1,5 @@
+'use strict'
+
 import * as axios from 'axios'
 import Playlist from './playlist'
 import { collector } from './util'

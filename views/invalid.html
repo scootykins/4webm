@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>4webm</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="stylesheet" href="/yotsuba.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="boardBanner">
+      <div id="bannerCnt" class="title desktop">
+        <img alt="4chan" src="/banner.png" />
+      </div>
+      <div class="boardTitle">4webm</div>
+      <div class="boardSubtitle">
+        Load and play all webms in a 4chan thread (highly recommend /wsg/ threads)<br />
+        4webm, nor its creator, are associated with 4chan.org<br />
+        Please consider giving me a <a href="https://github.com/ScottyFillups/4chan-webm-player">star</a> :)
+      </div>
+    </div>
+    <hr class="abovePostForm" />
+    <div id="togglePostFormLink" class="desktop">
+      [<a id="gen-playlist" href="#">Generate a New Playlist</a>]
+    </div>
+    <form id="thread-form" class="hide" action="">
+      <input id="thread-url" size="45" placeholder="Enter a 4chan thread URL" />
+      <button id="submit-url">Load webms!</button>
+    </form>
+    <hr />
+    <div class="globalMessage">
+      <h3>INVALID BOARD SHORT NAME IN URL</h3>
+      <h3>You can also load a thread by replacing '4chan' with '4webm' in a thread URL and visiting it</h3>
+    </div>
+    <hr />
+    <div class='body-cnt'>
+      <video id="player" width="650" height="400" controls>
+        <source id="player-source" src="" />
+        Your browser does not support the video tag! ;-;
+      </video>
+      <div id="playlist"></div>
+    </div>
+    <script src="/bundle.js"></script>
+  </body>
+</html>

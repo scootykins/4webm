@@ -1,60 +1,45 @@
-const fs = require('fs')
+'use strict'
+
+const fs = require('fs-extra')
 const path = require('path')
 const { Router } = require('express')
-const { RateLimiter } = require('limiter')
-const { Collector } = require('../util/collection')
-const { promisify } = require('util')
 const download = require('download')
 const listWebms = require('4chan-list-webm')
-const WEEK = 1000 * 60 * 60 * 24 * 7
+const Bottleneck = require('bottleneck')
 
-const unlinkAsync = promisify(fs.unlink)
-const limiter = new RateLimiter(1, 1000)
+const limiter = new Bottleneck({
+  maxConcurrent: 1,
+  minTime: 1000
+})
+const router = Router()
+const throttledListWebms = limiter.wrap(listWebms)
 
-function getRouter (redis) {
-  const router = Router()
+router.get('/:board/thread/:threadNo', (req, res) => {
+  const reg = /http:\/\/i\.4cdn\.org\/(.*)\/(.*)/g
+  const { board, threadNo } = req.params
+  const dir = path.join(__dirname, `../thumbnail/${board}/${threadNo}`)
 
-  router.get('/:board/thread/:threadNo', (req, res) => {
-    const { board, threadNo } = req.params
+  fs.ensureDir(dir)
+    .then(Promise.all([
+      throttledListWebms(board, threadNo),
+      fs.readdir(dir)
+    ]))
+    .then((arr) => {
+      const [webms, files] = arr
+      const thumbnails = webms.map(obj => obj['thumbnail'])
+      const filesToDownload = thumbnails.length - files.length
 
-
-    limiter.removeTokens(1, () => {
-      listWebms(board, threadNo, (webms) => {
-        const reg = /http:\/\/i\.4cdn\.org\/(.*)\/(.*)/g
-        const collect = Collector(webms)
-        const thumbnails = collect('thumbnail')
-        const thumbnailPaths = []
-
-        webms.forEach((webm) => {
-          webm.thumbnail = webm.thumbnail.replace(reg, `/thumbnail/$2`)
-          thumbnailPaths.push(`../thumbnail/${webm.thumbnail}`)
-        })
-
-        redis.get(`${board}/${threadNo}`, (err, reply) => {
-          if (reply === 'CACHED') {
-            console.log('Images cached: no download')
-            res.send(webms)
-            return
-          }
-
-          Promise.all(thumbnails.map(x => download(x, path.join(__dirname, '../thumbnail'))))
-            .then(() => {
-              console.log('Downloaded images!')
-              res.send(webms)
-              redis.set(`${board}/${threadNo}`, 'CACHED')
-
-              setTimeout(() => {
-                Promise.all(thumbnailPaths.map(x => unlinkAsync(x))).then(() => {
-                  console.log('Deleted images')
-                })
-              }, WEEK)
-            })
-        })
+      webms.forEach((webm) => {
+        webm.thumbnail = webm.thumbnail.replace(reg, `/thumbnail/${board}/${threadNo}/$2`)
       })
+
+      if (filesToDownload === 0) {
+        res.send(webms)        
+        return 'Images cached - no downloads needed'
+      } else {
+        const downloadPromises = thumbnails.slice(-filesToDownload).map(x => download(x, dir))
+        return Promise.all(downloadPromises).then(() => 'Images downloaded!')
+      }
     })
-  })
-
-  return router
-}
-
-module.exports = getRouter
+    .then(console.log)
+})

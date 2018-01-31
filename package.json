@@ -16,8 +16,7 @@
     "download": "^6.2.5",
     "express": "^4.16.2",
     "limiter": "^1.1.2",
-    "redis": "^2.8.0",
-    "timeout-as-promise": "^1.0.0"
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "buble-loader": "^0.4.1",

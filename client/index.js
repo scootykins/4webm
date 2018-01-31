@@ -1,3 +1,5 @@
+'use strict'
+
 import Player from './player'
 import { $ } from './util'
 
