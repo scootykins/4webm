@@ -8,9 +8,9 @@
   dependencies:
     semantic-release "^12.4.1"
 
-"4chan-list-webm@^2.0.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/4chan-list-webm/-/4chan-list-webm-2.1.1.tgz#a96dc36a8497b75af2620bd1739b35713604424a"
+"4chan-list-webm@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/4chan-list-webm/-/4chan-list-webm-3.0.0.tgz#40f9203e3b0cc937954013518acffbbe904ed5e4"
   dependencies:
     axios "^0.17.1"
 
