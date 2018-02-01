@@ -20,7 +20,7 @@ router.get('/:board/thread/:threadNo', (req, res) => {
   const dir = path.join(__dirname, `../thumbnail/${board}/${threadNo}`)
 
   fs.ensureDir(dir)
-    .then(Promise.all([
+    .then(() => Promise.all([
       throttledListWebms(board, threadNo),
       fs.readdir(dir)
     ]))
@@ -34,14 +34,14 @@ router.get('/:board/thread/:threadNo', (req, res) => {
       })
 
       if (filesToDownload === 0) {
-        res.send(webms)        
-        return 'Images cached - no downloads needed'
+        return webms
       } else {
         const downloadPromises = thumbnails.slice(-filesToDownload).map(x => download(x, dir))
-        return Promise.all(downloadPromises).then(() => 'Images downloaded!')
+        return Promise.all(downloadPromises).then(() => webms)
       }
     })
-    .then(console.log)
+    .then(res.send.bind(res))
+    .catch(console.error)
 })
 
 module.exports = router
