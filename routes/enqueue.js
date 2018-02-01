@@ -43,3 +43,5 @@ router.get('/:board/thread/:threadNo', (req, res) => {
     })
     .then(console.log)
 })
+
+module.exports = router
