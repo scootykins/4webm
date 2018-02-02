@@ -1,0 +1,39 @@
+.active {
+  color: red;
+}
+.hide {
+  display: none;
+}
+#thread-form {
+  text-align: center;
+}
+#playlist {
+  height: 380px;
+  display: inline-block;
+  overflow-y: auto;
+  width: 400px;
+  padding: 10px;
+  text-align: left;
+}
+.body-cnt {
+  text-align: center;
+}
+.body-cnt > * {
+  margin: 5px;
+  border: 1px solid #34345C;
+}
+
+.thumbnail {
+  max-width: 128px;
+  max-height: 128px;
+}
+.webm-link {
+  width: 55%;
+  word-wrap: break-word;
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+} 
+.playlist-item {
+  margin: 5px;
+}
