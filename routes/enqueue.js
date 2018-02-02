@@ -34,9 +34,14 @@ router.get('/:board/thread/:threadNo', (req, res) => {
       })
 
       if (filesToDownload === 0) {
+        console.log('Images cached! No files downloaded')
+
         return webms
       } else {
         const downloadPromises = thumbnails.slice(-filesToDownload).map(x => download(x, dir))
+
+        console.log(`${filesToDownload} images downloaded!`)
+        
         return Promise.all(downloadPromises).then(() => webms)
       }
     })
