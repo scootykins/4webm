@@ -975,6 +975,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
   video: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player'),
   source: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player-source'),
+  status: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#status'),
   playlist: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#playlist')
 })
 
@@ -1019,6 +1020,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEve
 var Player = function Player (dom) {
   this._$video = dom.video
   this._$source = dom.source
+  this._$status = dom.status
   this._index = 0
   this._webmUrls = []
   this._playlist = new __WEBPACK_IMPORTED_MODULE_1__playlist__["a" /* default */](dom.playlist)
@@ -1052,11 +1054,13 @@ Player.prototype.load = function load (threadUrl) {
     .catch(console.log)
 };
 
-
 Player.prototype.play = function play (index) {
-  this._playlist.update(index)
-  this._index = index
-  this._play()
+  if (index < this._webmUrls.length) {
+    this._playlist.update(index)
+    this._index = index
+    this._$status.innerHTML = (index + 1) + " / " + (this._webmUrls.length)
+    this._play()
+  }
 };
 
 Player.prototype.next = function next () {

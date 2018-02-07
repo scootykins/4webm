@@ -8,6 +8,7 @@ class Player {
   constructor (dom) {
     this._$video = dom.video
     this._$source = dom.source
+    this._$status = dom.status
     this._index = 0
     this._webmUrls = []
     this._playlist = new Playlist(dom.playlist)
@@ -37,11 +38,13 @@ class Player {
       .catch(console.log)
   }
 
-
   play (index) {
-    this._playlist.update(index)
-    this._index = index
-    this._play()
+    if (index < this._webmUrls.length) {
+      this._playlist.update(index)
+      this._index = index
+      this._$status.innerHTML = `${index + 1} / ${this._webmUrls.length}`
+      this._play()
+    }
   }
 
   next () {
