@@ -27,6 +27,15 @@ $('#prev').addEventListener('click', e => {
   player.prev()
 })
 
+$('#show-goto').addEventListener('click', e => {
+  $('#goto').classList.toggle('hide')
+})
+
+$('#goto').addEventListener('submit', e => {
+  e.preventDefault()
+  player.play($('#goto-input').value - 1)
+})
+
 $('#gen-playlist').addEventListener('click', () => {
   $('#thread-form').classList.remove('hide')
   $('#togglePostFormLink').classList.add('hide')
