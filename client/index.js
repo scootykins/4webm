@@ -18,6 +18,14 @@ $('#thread-form').addEventListener('submit', e => {
   player.load($('#thread-url').value)
 })
 
+$('#next').addEventListener('click', e => {
+  player.next()
+})
+
+$('#prev').addEventListener('click', e => {
+  player.prev()
+})
+
 $('#gen-playlist').addEventListener('click', () => {
   $('#thread-form').classList.remove('hide')
   $('#togglePostFormLink').classList.add('hide')
