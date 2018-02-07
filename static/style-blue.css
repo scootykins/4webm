@@ -2,7 +2,7 @@
   color: red;
 }
 .hide {
-  display: none;
+  display: none !important;
 }
 #thread-form {
   text-align: center;
@@ -44,4 +44,7 @@
 }
 #status {
   float: right;
+}
+#goto {
+  display: inline-block;
 }

@@ -996,6 +996,15 @@ Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#prev').addEventListen
   player.prev()
 })
 
+Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#show-goto').addEventListener('click', function (e) {
+  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').classList.toggle('hide')
+})
+
+Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').addEventListener('submit', function (e) {
+  e.preventDefault()
+  player.play(Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto-input').value - 1)
+})
+
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEventListener('click', function () {
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').classList.remove('hide')
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#togglePostFormLink').classList.add('hide')
