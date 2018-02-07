@@ -42,3 +42,6 @@
 .playlist-item {
   margin: 5px;
 }
+#status {
+  float: right;
+}
