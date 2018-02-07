@@ -39,7 +39,7 @@ class Player {
   }
 
   play (index) {
-    if (index < this._webmUrls.length) {
+    if (index < this._webmUrls.length && index >= 0) {
       this._playlist.update(index)
       this._index = index
       this._$status.innerHTML = `${index + 1} / ${this._webmUrls.length}`
