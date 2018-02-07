@@ -18,11 +18,16 @@
 .body-cnt {
   text-align: center;
 }
-.body-cnt > * {
+.player-cnt {
+  text-align: left;
+  width: 660px;
+  display: inline-block;
+}
+#playlist, #player {
   margin: 5px;
   border: 1px solid #800;
 }
-
+#menu { margin: 0 5px }
 .thumbnail {
   max-width: 128px;
   max-height: 128px;

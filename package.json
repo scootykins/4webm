@@ -16,7 +16,8 @@
     "bottleneck": "^2.0.1",
     "download": "^6.2.5",
     "express": "^4.16.2",
-    "fs-extra": "^5.0.0"
+    "fs-extra": "^5.0.0",
+    "hbs": "^4.0.1"
   },
   "devDependencies": {
     "axios": "^0.17.1",

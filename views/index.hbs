@@ -3,8 +3,8 @@
   <head>
     <title>4webm</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
-    <link rel="stylesheet" href="/yotsuba.css" />
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="{{global_style}}" />
+    <link rel="stylesheet" href="{{style}}" />
   </head>
   <body>
     <div class="boardBanner">
@@ -28,15 +28,24 @@
     </form>
     <hr />
     <div class="globalMessage">
-      <h3>INVALID BOARD SHORT NAME IN URL</h3>
-      <h3>You can also load a thread by replacing '4chan' with '4webm' in a thread URL and visiting it</h3>
+      {{#each messages}}
+        <h3>{{this}}</h3>
+      {{/each}}
     </div>
     <hr />
     <div class='body-cnt'>
-      <video id="player" width="650" height="400" controls>
-        <source id="player-source" src="" />
-        Your browser does not support the video tag! ;-;
-      </video>
+      <div id="menu">
+      </div>
+      <div class="player-cnt">
+        <div id="menu">
+          [<a id="next" href="#">Next</a>]
+          [<a id="prev" href="#">Prev</a>]
+        </div>
+        <video id="player" width="650" height="400" controls>
+          <source id="player-source" src="" />
+          Your browser does not support the video tag! ;-;
+        </video>
+      </div>
       <div id="playlist"></div>
     </div>
     <script src="/bundle.js"></script>
