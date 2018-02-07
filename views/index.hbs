@@ -2,6 +2,15 @@
 <html>
   <head>
     <title>4webm</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107224177-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-107224177-2');
+    </script>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <link rel="stylesheet" href="{{global_style}}" />
     <link rel="stylesheet" href="{{style}}" />
@@ -38,7 +47,7 @@
         <div id="menu">
           [<a id="prev" href="#">Prev</a>]
           [<a id="next" href="#">Next</a>]
-         <span id="status"></span>
+          <span id="status"></span>
         </div>
         <video id="player" width="650" height="400" controls>
           <source id="player-source" src="" />
