@@ -7,7 +7,6 @@ import { collector } from './util'
 class Player {
   constructor (dom) {
     this._$video = dom.video
-    this._$source = dom.source
     this._$status = dom.status
     this._$save = dom.save
     this._index = 0
@@ -77,7 +76,7 @@ class Player {
   }
 
   _play () {
-    this._$source.src = this._webmUrls[this._index]
+    this._$video.src = this._webmUrls[this._index]
     this._$save.href = this._webmUrls[this._index]
     this._$status.innerHTML = `${this._index + 1} / ${this._webmUrls.length}`
     this._playlist.update(this._index)
