@@ -989,14 +989,17 @@ Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').addEven
 })
 
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#next').addEventListener('click', function (e) {
+  e.preventDefault()
   player.next()
 })
 
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#prev').addEventListener('click', function (e) {
+  e.preventDefault()
   player.prev()
 })
 
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#show-goto').addEventListener('click', function (e) {
+  e.preventDefault()
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').classList.toggle('hide')
 })
 
@@ -1005,7 +1008,8 @@ Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').addEventListen
   player.play(Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto-input').value - 1)
 })
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEventListener('click', function () {
+Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEventListener('click', function (e) {
+  e.preventDefault()
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').classList.remove('hide')
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#togglePostFormLink').classList.add('hide')
 })
