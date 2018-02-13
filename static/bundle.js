@@ -1001,6 +1001,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#prev').addEventListen
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#show-goto').addEventListener('click', function (e) {
   e.preventDefault()
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').classList.toggle('hide')
+  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto-input').focus()
 })
 
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').addEventListener('submit', function (e) {
@@ -1012,6 +1013,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEve
   e.preventDefault()
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').classList.remove('hide')
   Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#togglePostFormLink').classList.add('hide')
+  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-url').focus()
 })
 
 

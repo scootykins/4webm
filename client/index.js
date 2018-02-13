@@ -32,6 +32,7 @@ $('#prev').addEventListener('click', e => {
 $('#show-goto').addEventListener('click', e => {
   e.preventDefault()
   $('#goto').classList.toggle('hide')
+  $('#goto-input').focus()
 })
 
 $('#goto').addEventListener('submit', e => {
@@ -43,4 +44,5 @@ $('#gen-playlist').addEventListener('click', e => {
   e.preventDefault()
   $('#thread-form').classList.remove('hide')
   $('#togglePostFormLink').classList.add('hide')
+  $('#thread-url').focus()
 })
