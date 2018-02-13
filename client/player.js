@@ -19,8 +19,8 @@ class Player {
   }
 
   load (threadUrl) {
-    const threadRegex = /\/(.*)\/thread\/(.*)/g
-    const [, board, threadNo] = threadRegex.exec(threadUrl)
+    const threadRegex = /(.*)\/(.*)\/thread\/(.*)/g
+    const [,, board, threadNo] = threadRegex.exec(threadUrl)
 
     this._playlist.reset()
 
