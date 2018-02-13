@@ -41,9 +41,7 @@ class Player {
 
   play (index) {
     if (index < this._webmUrls.length && index >= 0) {
-      this._playlist.update(index)
       this._index = index
-      this._$status.innerHTML = `${index + 1} / ${this._webmUrls.length}`
       this._play()
     }
   }
@@ -81,6 +79,7 @@ class Player {
   _play () {
     this._$source.src = this._webmUrls[this._index]
     this._$save.href = this._webmUrls[this._index]
+    this._$status.innerHTML = `${this._index + 1} / ${this._webmUrls.length}`
     this._playlist.update(this._index)
     this._$video.load()
   }
