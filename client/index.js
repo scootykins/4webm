@@ -5,7 +5,6 @@ import { $ } from './util'
 
 const player = new Player({
   video: $('#player'),
-  source: $('#player-source'),
   status: $('#status'),
   playlist: $('#playlist'),
   save: $('#save')

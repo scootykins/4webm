@@ -974,7 +974,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
   video: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player'),
-  source: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player-source'),
   status: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#status'),
   playlist: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#playlist'),
   save: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#save')
@@ -1039,7 +1038,6 @@ Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEve
 
 var Player = function Player (dom) {
   this._$video = dom.video
-  this._$source = dom.source
   this._$status = dom.status
   this._$save = dom.save
   this._index = 0
@@ -1115,7 +1113,7 @@ prototypeAccessors.loop.set = function (toggle) {
 };
 
 Player.prototype._play = function _play () {
-  this._$source.src = this._webmUrls[this._index]
+  this._$video.src = this._webmUrls[this._index]
   this._$save.href = this._webmUrls[this._index]
   this._$status.innerHTML = (this._index + 1) + " / " + (this._webmUrls.length)
   this._playlist.update(this._index)
