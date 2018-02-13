@@ -20,14 +20,17 @@ $('#thread-form').addEventListener('submit', e => {
 })
 
 $('#next').addEventListener('click', e => {
+  e.preventDefault()
   player.next()
 })
 
 $('#prev').addEventListener('click', e => {
+  e.preventDefault()
   player.prev()
 })
 
 $('#show-goto').addEventListener('click', e => {
+  e.preventDefault()
   $('#goto').classList.toggle('hide')
 })
 
@@ -36,7 +39,8 @@ $('#goto').addEventListener('submit', e => {
   player.play($('#goto-input').value - 1)
 })
 
-$('#gen-playlist').addEventListener('click', () => {
+$('#gen-playlist').addEventListener('click', e => {
+  e.preventDefault()
   $('#thread-form').classList.remove('hide')
   $('#togglePostFormLink').classList.add('hide')
 })
