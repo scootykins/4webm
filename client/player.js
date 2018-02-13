@@ -9,6 +9,7 @@ class Player {
     this._$video = dom.video
     this._$source = dom.source
     this._$status = dom.status
+    this._$save = dom.save
     this._index = 0
     this._webmUrls = []
     this._playlist = new Playlist(dom.playlist)
@@ -79,6 +80,7 @@ class Player {
 
   _play () {
     this._$source.src = this._webmUrls[this._index]
+    this._$save.href = this._webmUrls[this._index]
     this._playlist.update(this._index)
     this._$video.load()
   }

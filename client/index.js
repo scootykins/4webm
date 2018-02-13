@@ -7,7 +7,8 @@ const player = new Player({
   video: $('#player'),
   source: $('#player-source'),
   status: $('#status'),
-  playlist: $('#playlist')
+  playlist: $('#playlist'),
+  save: $('#save')
 })
 
 if (window.location.pathname !== '/') {
