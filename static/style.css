@@ -48,3 +48,7 @@
 #goto {
   display: inline-block;
 }
+#menu-misc {
+  margin-right: 50px;
+  display: inline-block;
+}

@@ -965,59 +965,70 @@ function collector (arr) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__player__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fscreen__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fscreen___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fscreen__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__player__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(8);
 
 
 
 
 
-var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
-  video: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player'),
-  status: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#status'),
-  playlist: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#playlist'),
-  save: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#save')
+
+var player = new __WEBPACK_IMPORTED_MODULE_1__player__["a" /* default */]({
+  video: Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#player'),
+  status: Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#status'),
+  playlist: Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#playlist'),
+  save: Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#save')
 })
+
+if (__WEBPACK_IMPORTED_MODULE_0_fscreen___default.a.fullscreenEnabled) {
+  Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#fullscreen').classList.remove('hide')
+  Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#fullscreen').addEventListener('click', function (e) {
+    e.preventDefault()
+    __WEBPACK_IMPORTED_MODULE_0_fscreen___default.a.requestFullscreen(Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#player'))
+  })
+}
 
 if (window.location.pathname !== '/') {
   player.load(window.location.href)
 }
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#loop').addEventListener('click', function (e) {
-  player.loop = Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#loop').checked
+Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#loop').addEventListener('click', function (e) {
+  player.loop = Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#loop').checked
 })
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').addEventListener('submit', function (e) {
+Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#thread-form').addEventListener('submit', function (e) {
   e.preventDefault()
-  player.load(Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-url').value)
+  player.load(Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#thread-url').value)
 })
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#next').addEventListener('click', function (e) {
+Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#next').addEventListener('click', function (e) {
   e.preventDefault()
   player.next()
 })
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#prev').addEventListener('click', function (e) {
+Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#prev').addEventListener('click', function (e) {
   e.preventDefault()
   player.prev()
 })
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#show-goto').addEventListener('click', function (e) {
+Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#show-goto').addEventListener('click', function (e) {
   e.preventDefault()
-  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').classList.toggle('hide')
-  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto-input').focus()
+  Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#goto').classList.toggle('hide')
+  Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#goto-input').focus()
 })
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto').addEventListener('submit', function (e) {
+Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#goto').addEventListener('submit', function (e) {
   e.preventDefault()
-  player.play(Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#goto-input').value - 1)
+  player.play(Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#goto-input').value - 1)
 })
 
-Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#gen-playlist').addEventListener('click', function (e) {
+Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#gen-playlist').addEventListener('click', function (e) {
   e.preventDefault()
-  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').classList.remove('hide')
-  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#togglePostFormLink').classList.add('hide')
-  Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-url').focus()
+  Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#thread-form').classList.remove('hide')
+  Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#togglePostFormLink').classList.add('hide')
+  Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* $ */])('#thread-url').focus()
 })
 
 
@@ -2090,6 +2101,74 @@ Playlist.prototype.hideThumbnails = function hideThumbnails () {
 
 /* harmony default export */ __webpack_exports__["a"] = (Playlist);
 
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var key = {
+  fullscreenEnabled: 0,
+  fullscreenElement: 1,
+  requestFullscreen: 2,
+  exitFullscreen: 3,
+  fullscreenchange: 4,
+  fullscreenerror: 5
+};
+
+var webkit = ['webkitFullscreenEnabled', 'webkitFullscreenElement', 'webkitRequestFullscreen', 'webkitExitFullscreen', 'webkitfullscreenchange', 'webkitfullscreenerror'];
+
+var moz = ['mozFullScreenEnabled', 'mozFullScreenElement', 'mozRequestFullScreen', 'mozCancelFullScreen', 'mozfullscreenchange', 'mozfullscreenerror'];
+
+var ms = ['msFullscreenEnabled', 'msFullscreenElement', 'msRequestFullscreen', 'msExitFullscreen', 'MSFullscreenChange', 'MSFullscreenError'];
+
+// so it doesn't throw if no window or document
+var document = typeof window !== 'undefined' && typeof window.document !== 'undefined' ? window.document : {};
+
+var vendor = 'fullscreenEnabled' in document && Object.keys(key) || webkit[0] in document && webkit || moz[0] in document && moz || ms[0] in document && ms || [];
+
+exports.default = {
+  requestFullscreen: function requestFullscreen(element) {
+    return element[vendor[key.requestFullscreen]]();
+  },
+  requestFullscreenFunction: function requestFullscreenFunction(element) {
+    return element[vendor[key.requestFullscreen]];
+  },
+  get exitFullscreen() {
+    return document[vendor[key.exitFullscreen]].bind(document);
+  },
+  addEventListener: function addEventListener(type, handler, options) {
+    return document.addEventListener(vendor[key[type]], handler, options);
+  },
+  removeEventListener: function removeEventListener(type, handler, options) {
+    return document.removeEventListener(vendor[key[type]], handler, options);
+  },
+  get fullscreenEnabled() {
+    return Boolean(document[vendor[key.fullscreenEnabled]]);
+  },
+  set fullscreenEnabled(val) {},
+  get fullscreenElement() {
+    return document[vendor[key.fullscreenElement]];
+  },
+  set fullscreenElement(val) {},
+  get onfullscreenchange() {
+    return document[('on' + vendor[key.fullscreenchange]).toLowerCase()];
+  },
+  set onfullscreenchange(handler) {
+    return document[('on' + vendor[key.fullscreenchange]).toLowerCase()] = handler;
+  },
+  get onfullscreenerror() {
+    return document[('on' + vendor[key.fullscreenerror]).toLowerCase()];
+  },
+  set onfullscreenerror(handler) {
+    return document[('on' + vendor[key.fullscreenerror]).toLowerCase()] = handler;
+  }
+};
 
 /***/ })
 /******/ ]);
