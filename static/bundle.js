@@ -983,6 +983,10 @@ if (window.location.pathname !== '/') {
   player.load(window.location.href)
 }
 
+Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#loop').addEventListener('click', function (e) {
+  player.loop = Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#loop').checked
+})
+
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').addEventListener('submit', function (e) {
   e.preventDefault()
   player.load(Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-url').value)
@@ -1045,6 +1049,8 @@ var Player = function Player (dom) {
   this._$video.addEventListener('ended', this.next.bind(this))
 };
 
+var prototypeAccessors = { loop: {} };
+
 Player.prototype.load = function load (threadUrl) {
     var this$1 = this;
 
@@ -1104,11 +1110,17 @@ Player.prototype.hideThumbnails = function hideThumbnails () {
   this._playlist.hideThumbnails()
 };
 
+prototypeAccessors.loop.set = function (toggle) {
+  this._$video.loop = toggle
+};
+
 Player.prototype._play = function _play () {
   this._$source.src = this._webmUrls[this._index]
   this._playlist.update(this._index)
   this._$video.load()
 };
+
+Object.defineProperties( Player.prototype, prototypeAccessors );
 
 /* harmony default export */ __webpack_exports__["a"] = (Player);
 
