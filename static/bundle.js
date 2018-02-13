@@ -1079,9 +1079,7 @@ Player.prototype.load = function load (threadUrl) {
 
 Player.prototype.play = function play (index) {
   if (index < this._webmUrls.length && index >= 0) {
-    this._playlist.update(index)
     this._index = index
-    this._$status.innerHTML = (index + 1) + " / " + (this._webmUrls.length)
     this._play()
   }
 };
@@ -1119,6 +1117,7 @@ prototypeAccessors.loop.set = function (toggle) {
 Player.prototype._play = function _play () {
   this._$source.src = this._webmUrls[this._index]
   this._$save.href = this._webmUrls[this._index]
+  this._$status.innerHTML = (this._index + 1) + " / " + (this._webmUrls.length)
   this._playlist.update(this._index)
   this._$video.load()
 };
@@ -2059,7 +2058,9 @@ Playlist.prototype.update = function update (index, classname) {
     if ( classname === void 0 ) classname = 'active';
 
   Array.from(this._$playlist.childNodes)
-    .filter(function (x) { return x.tagName === 'A'; })
+    .filter(function (x) { return x.tagName === 'DIV'; })
+    .map(function (item) { return Array.from(item.childNodes); })
+    .map(function (itemComponents) { return itemComponents.find(function (x) { return x.tagName === 'A'; }); })
     .forEach(function (elem, i) {
       if (index === i) {
         elem.classList.add(classname)
@@ -2072,7 +2073,7 @@ Playlist.prototype.update = function update (index, classname) {
 Playlist.prototype.reset = function reset () {
     var this$1 = this;
 
-  while(this._$playlist.firstChild) {
+  while (this._$playlist.firstChild) {
     this$1._$playlist.removeChild(this$1._$playlist.firstChild)
   }
 };

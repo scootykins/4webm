@@ -31,7 +31,9 @@ class Playlist {
 
   update (index, classname = 'active') {
     Array.from(this._$playlist.childNodes)
-      .filter(x => x.tagName === 'A')
+      .filter(x => x.tagName === 'DIV')
+      .map(item => Array.from(item.childNodes))
+      .map(itemComponents => itemComponents.find(x => x.tagName === 'A'))
       .forEach((elem, i) => {
         if (index === i) {
           elem.classList.add(classname)
@@ -42,7 +44,7 @@ class Playlist {
   }
 
   reset () {
-    while(this._$playlist.firstChild) {
+    while (this._$playlist.firstChild) {
       this._$playlist.removeChild(this._$playlist.firstChild)
     }
   }
