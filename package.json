@@ -22,6 +22,7 @@
   "devDependencies": {
     "axios": "^0.17.1",
     "buble-loader": "^0.4.1",
+    "fscreen": "^1.0.2",
     "nodemon": "^1.14.7",
     "webpack": "^3.10.0"
   }

@@ -1,5 +1,6 @@
 'use strict'
 
+import fscreen from 'fscreen'
 import Player from './player'
 import { $ } from './util'
 
@@ -9,6 +10,14 @@ const player = new Player({
   playlist: $('#playlist'),
   save: $('#save')
 })
+
+if (fscreen.fullscreenEnabled) {
+  $('#fullscreen').classList.remove('hide')
+  $('#fullscreen').addEventListener('click', e => {
+    e.preventDefault()
+    fscreen.requestFullscreen($('#player'))
+  })
+}
 
 if (window.location.pathname !== '/') {
   player.load(window.location.href)
