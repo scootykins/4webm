@@ -976,7 +976,8 @@ var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
   video: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player'),
   source: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#player-source'),
   status: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#status'),
-  playlist: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#playlist')
+  playlist: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#playlist'),
+  save: Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#save')
 })
 
 if (window.location.pathname !== '/') {
@@ -1040,6 +1041,7 @@ var Player = function Player (dom) {
   this._$video = dom.video
   this._$source = dom.source
   this._$status = dom.status
+  this._$save = dom.save
   this._index = 0
   this._webmUrls = []
   this._playlist = new __WEBPACK_IMPORTED_MODULE_1__playlist__["a" /* default */](dom.playlist)
@@ -1116,6 +1118,7 @@ prototypeAccessors.loop.set = function (toggle) {
 
 Player.prototype._play = function _play () {
   this._$source.src = this._webmUrls[this._index]
+  this._$save.href = this._webmUrls[this._index]
   this._playlist.update(this._index)
   this._$video.load()
 };
