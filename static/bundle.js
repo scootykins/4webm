@@ -980,7 +980,7 @@ var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
 })
 
 if (window.location.pathname !== '/') {
-  player.load(window.location.href)
+  player.load(window.location.pathname)
 }
 
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').addEventListener('submit', function (e) {
@@ -1042,14 +1042,14 @@ var Player = function Player (dom) {
 Player.prototype.load = function load (threadUrl) {
     var this$1 = this;
 
-  var threadRegex = /http:\/\/boards.4(webm|chan).org\/(.*)\/(.*)/
+  var threadRegex = /\/(.*)\/thread\/(.*)/g
   var ref = threadRegex.exec(threadUrl);
-    var board = ref[2];
-    var threadNo = ref[3];
+    var board = ref[1];
+    var threadNo = ref[2];
 
   this._playlist.reset()
 
-  __WEBPACK_IMPORTED_MODULE_0_axios__["get"](("/enqueue/" + board + "/" + threadNo))
+  __WEBPACK_IMPORTED_MODULE_0_axios__["get"](("/enqueue/" + board + "/thread/" + threadNo))
     .then(function (res) {
       var collect = Object(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* collector */])(res.data)
       this$1._webmUrls = collect('url')

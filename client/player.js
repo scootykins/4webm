@@ -19,12 +19,12 @@ class Player {
   }
 
   load (threadUrl) {
-    const threadRegex = /http:\/\/boards.4(webm|chan).org\/(.*)\/(.*)/
-    const [,, board, threadNo] = threadRegex.exec(threadUrl)
+    const threadRegex = /\/(.*)\/thread\/(.*)/g
+    const [, board, threadNo] = threadRegex.exec(threadUrl)
 
     this._playlist.reset()
 
-    axios.get(`/enqueue/${board}/${threadNo}`)
+    axios.get(`/enqueue/${board}/thread/${threadNo}`)
       .then(res => {
         const collect = collector(res.data)
         this._webmUrls = collect('url')
