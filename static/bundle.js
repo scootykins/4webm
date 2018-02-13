@@ -980,7 +980,7 @@ var player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */]({
 })
 
 if (window.location.pathname !== '/') {
-  player.load(window.location.pathname)
+  player.load(window.location.href)
 }
 
 Object(__WEBPACK_IMPORTED_MODULE_1__util__["a" /* $ */])('#thread-form').addEventListener('submit', function (e) {
@@ -1046,10 +1046,10 @@ var Player = function Player (dom) {
 Player.prototype.load = function load (threadUrl) {
     var this$1 = this;
 
-  var threadRegex = /\/(.*)\/thread\/(.*)/g
+  var threadRegex = /(.*)\/(.*)\/thread\/(.*)/g
   var ref = threadRegex.exec(threadUrl);
-    var board = ref[1];
-    var threadNo = ref[2];
+    var board = ref[2];
+    var threadNo = ref[3];
 
   this._playlist.reset()
 
