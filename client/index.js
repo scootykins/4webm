@@ -14,6 +14,10 @@ if (window.location.pathname !== '/') {
   player.load(window.location.href)
 }
 
+$('#loop').addEventListener('click', e => {
+  player.loop = $('#loop').checked
+})
+
 $('#thread-form').addEventListener('submit', e => {
   e.preventDefault()
   player.load($('#thread-url').value)

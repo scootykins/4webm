@@ -73,6 +73,10 @@ class Player {
     this._playlist.hideThumbnails()
   }
 
+  set loop (toggle) {
+    this._$video.loop = toggle
+  }
+
   _play () {
     this._$source.src = this._webmUrls[this._index]
     this._playlist.update(this._index)
