@@ -21,7 +21,7 @@ router.get('/:board/thread/:threadNo', (req, res) => {
 
   fs.ensureDir(dir)
     .then(() => Promise.all([
-      throttledListWebms(board, threadNo),
+      throttledListWebms(board, threadNo, { https: true }),
       fs.readdir(dir)
     ]))
     .then((arr) => {
