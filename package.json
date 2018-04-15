@@ -7,6 +7,7 @@
   "scripts": {
     "start": "./bin/www",
     "dev": "nodemon ./bin/www --ignore /static --ignore /client",
+    "test": "echo \"No test specified!\"",
     "watch": "webpack --watch",
     "build": "webpack"
   },
