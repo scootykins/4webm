@@ -15,7 +15,7 @@ const router = Router()
 const throttledListWebms = limiter.wrap(listWebms)
 
 router.get('/:board/thread/:threadNo', (req, res) => {
-  const reg = /http:\/\/i\.4cdn\.org\/(.*)\/(.*)/g
+  const reg = /https:\/\/i\.4cdn\.org\/(.*)\/(.*)/g
   const { board, threadNo } = req.params
   const dir = path.join(__dirname, `../thumbnail/${board}/${threadNo}`)
 
