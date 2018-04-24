@@ -43,6 +43,13 @@ class Playlist {
       })
   }
 
+  load () {
+    const $msg = document.createElement('p')
+    $msg.innerHTML = 'Loading...'
+
+    this._$playlist.appendChild($msg)
+  }
+
   reset () {
     while (this._$playlist.firstChild) {
       this._$playlist.removeChild(this._$playlist.firstChild)
