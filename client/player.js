@@ -22,14 +22,12 @@ class Player {
     const threadRegex = /(.*)\/(.*)\/thread\/(.*)/g
     const [,, board, threadNo] = threadRegex.exec(threadUrl)
 
-    this._playlist.reset()
-    this._playlist.load()
+    this._playlist.flash('Loading...')
 
     axios.get(`/enqueue/${board}/thread/${threadNo}`)
       .then(res => {
         const collect = collector(res.data)
 
-        this._playlist.reset()
         this._webmUrls = collect('url')
         this._playlist.gen(
           collect('filename'),
