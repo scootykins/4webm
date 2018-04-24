@@ -7,6 +7,8 @@ class Playlist {
   }
 
   gen (filenames, thumbnails, handler) {
+    this._reset()
+
     filenames.forEach((filename, i) => {
       const $a = document.createElement('a')
       const $img = document.createElement('img')
@@ -43,14 +45,15 @@ class Playlist {
       })
   }
 
-  load () {
+  flash (msg) {
     const $msg = document.createElement('p')
-    $msg.innerHTML = 'Loading...'
+    $msg.innerHTML = msg
 
+    this._reset()
     this._$playlist.appendChild($msg)
   }
 
-  reset () {
+  _reset () {
     while (this._$playlist.firstChild) {
       this._$playlist.removeChild(this._$playlist.firstChild)
     }
