@@ -2,6 +2,7 @@
 /thumbnail
 *.swo
 dump.rdb
+static/bundle.js
 *.swp
 *.log
 TODO.md
