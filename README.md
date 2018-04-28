@@ -5,16 +5,19 @@
   <em>33. Lurk more — it's never enough.</em> :four_leaf_clover:
 </p><br />
 
-Tired of digging through threads for videos?
+<p align="center">Tired of digging through threads for videos?</p>
 
-Don't get me wrong, reading through the posts can be fun...
+<p align="center">Don't get me wrong, reading through the posts can be fun...</p>
 
-But sometimes, you just wanna listen to a nice YGYL thread while you work on other stuff, 'ya know?
+<p align="center">But sometimes, you just wanna listen to a nice YGYL thread while you work on other stuff, 'ya know?</p><br /><br />
 
-<p align="center">Well, now you can :wink:</p><br />
+<p align="center">Well, now you can :wink:</p><br /><br />
 
-[4webm](4webm.org) is a web application that loads all webms from a 4chan thread into a playlist. Given any arbitrary 4chan thread URL, you can load it by replacing "4chan" with "4webm", eg. https://boards.4chan.org/wsg/thread/2036111 -> https://boards.4webm.org/wsg/thread/2036111
+<p align="center"><b><a href="4webm.org">4webm</a> is a web application that loads all webms from a 4chan thread into a playlist.</b></p>
 
+Given any arbitrary 4chan thread URL, you can load it by replacing "4chan" with "4webm", eg. https://boards.4chan.org/wsg/thread/2036111 -> https://boards.4webm.org/wsg/thread/2036111
+
+<br />
 
 ## Running locally
 
