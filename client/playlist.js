@@ -38,10 +38,10 @@ class Playlist {
   }
 
   update (index, classname = 'active') {
-    Array.from(this._$playlist.childNodes)
+    const arr = Array.from(this._$playlist.childNodes)
       .filter(x => x.tagName === 'DIV')
       .map(item => Array.from(item.childNodes))
-      .map(itemComponents => itemComponents.find(x => x.tagName === 'A'))
+      .map(itemComponents => itemComponents[1])
       .forEach((elem, i) => {
         if (index === i) {
           elem.classList.add(classname)
