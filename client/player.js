@@ -19,8 +19,10 @@ class Player {
   }
 
   load (threadUrl) {
-    const threadRegex = /(.*)\/(.*)\/thread\/(.*)/g
-    const [,, board, threadNo] = threadRegex.exec(threadUrl)
+    const threadRegex = /(.*)\/(.*)\/thread\/(\d*)(#\d*)?/g
+    const [,, board, threadNo, fragment] = threadRegex.exec(threadUrl)
+
+    const index = fragment ? Number(fragment.slice(1) - 1) : 0
 
     this._playlist.flash('Loading...')
 
@@ -34,7 +36,7 @@ class Player {
           collect('thumbnail'),
           this.play.bind(this)
         )
-        this.play(0)
+        this.play(index)
       })
       .catch(console.log)
   }
