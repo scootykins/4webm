@@ -1,5 +1,5 @@
 .active {
-  color: red;
+  color: red !important;
 }
 .hide {
   display: none !important;
