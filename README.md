@@ -16,7 +16,7 @@
 
 <p align="center"><b><a href="4webm.org">4webm</a> is a web application that loads all webms from a 4chan thread into a playlist.</b></p>
 
-Given any arbitrary 4chan thread URL, you can load it by replacing "4chan" with "4webm". For example, https://boards.4chan.org/wsg/thread/2036111 -> https://boards.4webm.org/wsg/thread/2036111
+Given any arbitrary 4chan thread URL, you can load it by replacing "4chan" with "4webm". For example, https://boards.4webm.org/wsg/thread/2036111
 
 <br />
 
