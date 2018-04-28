@@ -1,13 +1,19 @@
-# 4webm
+<h1 align="center">:sparkles::star2:4webm:star2::sparkles:</h1>
 
-Load and watch webms in a 4chan thread. Ideal for boards like /wsg/.
+<p align="center">
+  <img style="margin: 0 auto;" alt="lolicatgirls.swf" src="http://i0.kym-cdn.com/entries/icons/medium/000/003/924/fdba34b81ab2b8396591f12a48a657cb.gif" /><br /><br />
+  <em>33. Lurk more — it's never enough.</em> :four_leaf_clover:
+</p><br />
 
-Got a cool music thread and just want to listen to all the videos in the background? Now you can.
+Tired of digging through threads for videos?
 
-Live [here!](http://www.4webm.org)
+Don't get me wrong, reading through the posts can be fun...
 
-Also, for any arbitrary 4chan thread URL, eg. http://boards.4chan.org/wsg/thread/2036111, you can load the thread by
-just replacing "4chan" with "4webm" (ie. http://boards.4webm.org/wsg/thread/2036111).
+But sometimes, you just wanna listen to a nice YGYL thread while you work on other stuff, 'ya know?
+
+<p align="center">Well, now you can :wink:</p><br />
+
+[4webm](4webm.org) is a web application that loads all webms from a 4chan thread into a playlist. Given any arbitrary 4chan thread URL, you can load it by replacing "4chan" with "4webm", eg. https://boards.4chan.org/wsg/thread/2036111 -> https://boards.4webm.org/wsg/thread/2036111
 
 
 ## Running locally
@@ -19,7 +25,8 @@ A solution is to run 4webm locally, to avoid sharing access to the API. You'll n
 ```bash
 $ git clone https://github.com/ScottyFillups/4webm.git
 $ npm install
-$ npm start
+$ npm run build
+$ npm run start
 ```
 
 Once you do that, you should be able to access the application at `http://localhost:8080`
