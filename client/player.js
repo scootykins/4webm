@@ -1,6 +1,7 @@
 'use strict'
 
 import * as axios from 'axios'
+import boards from '4chan-boards'
 import Playlist from './playlist'
 import { collector } from './util'
 
@@ -36,7 +37,13 @@ class Player {
       return
     }
 
-    const collect = collector(res.data)
+    document.title = [
+      `/${board}/`,
+      res.data.subject,
+      boards.getName(board),
+      '4webm'
+    ].join(' - ')
+    const collect = collector(res.data.webms)
 
     this._webmUrls = collect('url')
     this._filenames = collect('filename')

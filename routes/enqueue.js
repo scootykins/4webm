@@ -43,7 +43,7 @@ router.get('/:board/thread/:threadNo', async (req, res) => {
 
   try {
     webmJson = await throttledListWebms(board, threadNo, { https: true })
-    thumbnailJson = webmJson.map(obj => obj['thumbnail'])
+    thumbnailJson = webmJson.webms.map(webm => webm.thumbnail)
   } catch (err) {
     res.status(404).send(err.message)
 
@@ -56,7 +56,7 @@ router.get('/:board/thread/:threadNo', async (req, res) => {
     console.error(`Failed to download thumbnails: ${err}`)
   }
 
-  webmJson.forEach((webm) => {
+  webmJson.webms.forEach((webm) => {
     webm.thumbnail = webm.thumbnail.replace(reg, `/thumbnail/${board}/${threadNo}/$2`)
   })
 

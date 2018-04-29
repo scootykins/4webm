@@ -17,8 +17,8 @@
     ]
   },
   "dependencies": {
-    "4chan-boards": "^1.0.3",
-    "4chan-list-webm": "^3.0.2",
+    "4chan-boards": "^2.0.0",
+    "4chan-list-webm": "^4.0.0",
     "bottleneck": "^2.0.1",
     "download": "^6.2.5",
     "express": "^4.16.2",
