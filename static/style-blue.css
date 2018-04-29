@@ -1,3 +1,6 @@
+body {
+  padding-bottom: 40px;
+}
 .active {
   color: red !important;
 }
@@ -51,4 +54,7 @@
 #menu-misc {
   display: inline-block;
   margin-right: 50px;
+}
+#filename {
+  text-align: center;
 }
