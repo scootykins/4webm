@@ -9,4 +9,3 @@ export function collector (arr) {
     return arr.map(obj => obj[key])
   }
 }
-

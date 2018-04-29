@@ -19,7 +19,7 @@ class Playlist {
       $a.innerHTML = `${num}. ${filename}.webm`
       $a.className = 'webm-link'
       $a.href = `#${num.toString()}`
-      
+
       $a.addEventListener('click', () => handler(i))
 
       $img.src = thumbnails[i]
@@ -38,7 +38,7 @@ class Playlist {
   }
 
   update (index, classname = 'active') {
-    const arr = Array.from(this._$playlist.childNodes)
+    Array.from(this._$playlist.childNodes)
       .filter(x => x.tagName === 'DIV')
       .map(item => Array.from(item.childNodes))
       .map(itemComponents => itemComponents[1])
@@ -66,13 +66,13 @@ class Playlist {
   }
 
   showThumbnails () {
-    $imgs.forEach(($img) => {
+    this._$imgs.forEach(($img) => {
       $img.classList.remove('hide')
     })
   }
 
   hideThumbnails () {
-    $imgs.forEach(($img) => {
+    this._$imgs.forEach(($img) => {
       $img.classList.add('hide')
     })
   }
