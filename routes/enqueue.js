@@ -24,10 +24,12 @@ async function downloadThumbnails (dir, urls) {
     console.log('Images cached! No thumbnails downloaded')
   } else {
     const downloadPromises = urls
-      .slice(-filesToDownload)
+      .slice(-thumbnailsToDownload)
       .map(x => download(x, dir))
 
     await Promise.all(downloadPromises)
+
+    console.log(`${urls.length} thumbnails downloaded!`)
   }
 }
 
