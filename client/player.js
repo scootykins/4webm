@@ -18,27 +18,37 @@ class Player {
     this._$video.addEventListener('ended', this.next.bind(this))
   }
 
-  load (threadUrl) {
-    const threadRegex = /(.*)\/(.*)\/thread\/(\d*)(#\d*)?/g
+  async load (threadUrl) {
+    const threadRegex = /(.*)\/(.*)\/thread\/(\d*)(?:#(\d*))?/g
     const [,, board, threadNo, fragment] = threadRegex.exec(threadUrl)
-
-    const index = fragment ? Number(fragment.slice(1) - 1) : 0
+    let res
 
     this._playlist.flash('Loading...')
 
-    axios.get(`/enqueue/${board}/thread/${threadNo}`)
-      .then(res => {
-        const collect = collector(res.data)
+    try {
+      res = await axios.get(`/enqueue/${board}/thread/${threadNo}`)
+    } catch (err) {
+      this._playlist.flash('Failed to get thread data :c')
+      console.error(err)
 
-        this._webmUrls = collect('url')
-        this._playlist.gen(
-          collect('filename'),
-          collect('thumbnail'),
-          this.play.bind(this)
-        )
-        this.play(index)
-      })
-      .catch(console.log)
+      return
+    }
+
+    const collect = collector(res.data)
+    
+    this._webmUrls = collect('url')
+    this._playlist.gen(
+      collect('filename'),
+      collect('thumbnail'),
+      this.play.bind(this)
+    )
+
+
+    const index = fragment && Number(fragment) <= this._webmUrls.length
+      ? Number(fragment) - 1
+      : 0
+
+    this.play(index)
   }
 
   play (index) {
