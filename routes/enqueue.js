@@ -14,39 +14,51 @@ const limiter = new Bottleneck({
 const router = Router()
 const throttledListWebms = limiter.wrap(listWebms)
 
-router.get('/:board/thread/:threadNo', (req, res) => {
+async function downloadThumbnails (dir, urls) {
+  await fs.ensureDir(dir)
+
+  const thumbnails = await fs.readdir(dir)
+  const thumbnailsToDownload = urls.length - thumbnails.length
+
+  if (thumbnailsToDownload === 0) {
+    console.log('Images cached! No thumbnails downloaded')
+  } else {
+    const downloadPromises = urls
+      .slice(-filesToDownload)
+      .map(x => download(x, dir))
+
+    await Promise.all(downloadPromises)
+  }
+}
+
+router.get('/:board/thread/:threadNo', async (req, res) => {
   const reg = /https:\/\/i\.4cdn\.org\/(.*)\/(.*)/g
   const { board, threadNo } = req.params
   const dir = path.join(__dirname, `../thumbnail/${board}/${threadNo}`)
 
-  fs.ensureDir(dir)
-    .then(() => Promise.all([
-      throttledListWebms(board, threadNo, { https: true }),
-      fs.readdir(dir)
-    ]))
-    .then((arr) => {
-      const [webms, files] = arr
-      const thumbnails = webms.map(obj => obj['thumbnail'])
-      const filesToDownload = thumbnails.length - files.length
+  let webmJson
+  let thumbnailJson 
 
-      webms.forEach((webm) => {
-        webm.thumbnail = webm.thumbnail.replace(reg, `/thumbnail/${board}/${threadNo}/$2`)
-      })
+  try {
+    webmJson = await throttledListWebms(board, threadNo, { https: true })
+    thumbnailJson = webmJson.map(obj => obj['thumbnail'])
+  } catch (err) {
+    res.status(404).send(err.message)
 
-      if (filesToDownload === 0) {
-        console.log('Images cached! No files downloaded')
+    return
+  }
 
-        return webms
-      } else {
-        const downloadPromises = thumbnails.slice(-filesToDownload).map(x => download(x, dir))
+  try {
+    await downloadThumbnails(dir, thumbnailJson)
+  } catch (err) {
+    console.error(`Failed to download thumbnails: ${err}`)
+  }
 
-        console.log(`${filesToDownload} images downloaded!`)
-        
-        return Promise.all(downloadPromises).then(() => webms)
-      }
-    })
-    .then(res.send.bind(res))
-    .catch(console.error)
+  webmJson.forEach((webm) => {
+    webm.thumbnail = webm.thumbnail.replace(reg, `/thumbnail/${board}/${threadNo}/$2`)
+  })
+
+  res.json(webmJson)
 })
 
 module.exports = router
