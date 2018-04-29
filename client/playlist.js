@@ -6,8 +6,15 @@ class Playlist {
     this._$imgs = []
   }
 
-  gen (filenames, thumbnails, handler) {
+  gen (filenames, thumbnails, subject, handler) {
     this._reset()
+
+    const $subject = document.createElement('p')
+
+    $subject.className = 'subject'
+    $subject.innerHTML = subject
+
+    this._$playlist.appendChild($subject)
 
     filenames.forEach((filename, i) => {
       const $a = document.createElement('a')

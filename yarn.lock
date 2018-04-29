@@ -2,15 +2,15 @@
 # yarn lockfile v1
 
 
-"4chan-boards@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/4chan-boards/-/4chan-boards-1.0.3.tgz#80a11fea744eaa1440a45b46b8e5bdbe6945bc6f"
+"4chan-boards@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/4chan-boards/-/4chan-boards-2.0.0.tgz#3c727e10e7e79bc6aaf13f295f22d0f3071fcfec"
   dependencies:
     semantic-release "^12.4.1"
 
-"4chan-list-webm@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/4chan-list-webm/-/4chan-list-webm-3.0.2.tgz#5cdb66357cc5289e4050fb74663c0b855c94fd48"
+"4chan-list-webm@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/4chan-list-webm/-/4chan-list-webm-4.0.0.tgz#67904e8f09263c48dc7f7ebfe69468e9da6da5e5"
   dependencies:
     axios "^0.17.1"
 

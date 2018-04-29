@@ -58,3 +58,8 @@ body {
 #filename {
   text-align: center;
 }
+.subject {
+  color: #cc1105;
+  margin: 5px 5px 20px 5px;
+  font-weight: 700;
+}
