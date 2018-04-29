@@ -50,6 +50,7 @@ class Player {
     this._playlist.gen(
       this._filenames,
       collect('thumbnail'),
+      res.data.subject,
       this.play.bind(this)
     )
 
