@@ -11,25 +11,20 @@ class Playlist {
 
     filenames.forEach((filename, i) => {
       const $a = document.createElement('a')
-      const $imgLink = document.createElement('a')
       const $img = document.createElement('img')
       const $div = document.createElement('div')
       const num = i + 1
 
       $a.innerHTML = `${num}. ${filename}.webm`
       $a.className = 'webm-link'
-      $a.href = `#${num.toString()}`
-
       $a.addEventListener('click', () => handler(i))
 
       $img.src = thumbnails[i]
       $img.className = 'thumbnail'
       $img.addEventListener('click', () => handler(i))
-      $imgLink.href = $a.href
-      $imgLink.appendChild($img)
 
       $div.className = 'playlist-item'
-      $div.appendChild($imgLink)
+      $div.appendChild($img)
       $div.appendChild($a)
 
       this._$playlist.appendChild($div)
@@ -41,7 +36,7 @@ class Playlist {
     Array.from(this._$playlist.childNodes)
       .filter(x => x.tagName === 'DIV')
       .map(item => Array.from(item.childNodes))
-      .map(itemComponents => itemComponents[1])
+      .map(itemComponents => itemComponents.find(x => x.tagName === 'A'))
       .forEach((elem, i) => {
         if (index === i) {
           elem.classList.add(classname)

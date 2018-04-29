@@ -91,6 +91,7 @@ class Player {
     this._$video.src = this._webmUrls[this._index]
     this._$save.href = this._webmUrls[this._index]
     this._$status.innerHTML = `${this._index + 1} / ${this._webmUrls.length}`
+    window.location.hash = this._index + 1
     this._playlist.update(this._index)
     this._$video.load()
   }
