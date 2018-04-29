@@ -28,7 +28,7 @@ class Player {
     try {
       res = await axios.get(`/enqueue/${board}/thread/${threadNo}`)
     } catch (err) {
-      this._playlist.flash('Failed to get thread data :c')
+      this._playlist.flash('Failed to get thread data, are you sure it exists?')
       console.error(err)
 
       return
