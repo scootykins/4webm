@@ -10,7 +10,10 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'buble-loader',
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
       }
     ]
   }
