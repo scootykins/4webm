@@ -8,6 +8,7 @@ const player = new Player({
   video: $('#player'),
   status: $('#status'),
   playlist: $('#playlist'),
+  title: $('#filename'),
   save: $('#save')
 })
 
