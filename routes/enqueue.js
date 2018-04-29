@@ -39,7 +39,7 @@ router.get('/:board/thread/:threadNo', async (req, res) => {
   const dir = path.join(__dirname, `../thumbnail/${board}/${threadNo}`)
 
   let webmJson
-  let thumbnailJson 
+  let thumbnailJson
 
   try {
     webmJson = await throttledListWebms(board, threadNo, { https: true })
