@@ -6,10 +6,10 @@
   "license": "MIT",
   "scripts": {
     "start": "./bin/www",
-    "dev": "nodemon ./bin/www --ignore /static --ignore /client",
-    "test": "echo \"No test specified!\"",
-    "watch": "webpack --watch",
-    "build": "webpack"
+    "test": "eslint .",
+    "build": "webpack",
+    "sdev": "nodemon ./bin/www --ignore /static --ignore /client",
+    "cdev": "webpack --watch"
   },
   "dependencies": {
     "4chan-boards": "^1.0.3",

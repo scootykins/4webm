@@ -35,14 +35,13 @@ class Player {
     }
 
     const collect = collector(res.data)
-    
+
     this._webmUrls = collect('url')
     this._playlist.gen(
       collect('filename'),
       collect('thumbnail'),
       this.play.bind(this)
     )
-
 
     const index = fragment && Number(fragment) <= this._webmUrls.length
       ? Number(fragment) - 1
