@@ -7,7 +7,7 @@ import { $ } from './util'
 const remote = {
   next: 'right',
   prev: 'left',
-  pause: 'space'
+  toggle: 'space'
 }
 const player = new Player({
   video: $('#player'),
