@@ -1,6 +1,7 @@
 'use strict'
 
 import * as axios from 'axios'
+import * as keycode from 'keycode'
 import boards from '4chan-boards'
 import Playlist from './playlist'
 import { collector } from './util'
@@ -59,6 +60,21 @@ class Player {
       : 0
 
     this.play(index)
+  }
+
+  registerRemote ({ pause, next, prev }) {
+    document.body.removeEventListener('keyup')
+    document.body.addEventListener('keyup', (e) => {
+      const key = keycode(e)
+
+      if (key === pause) {
+        this._player.pause()
+      } else if (key === next) {
+        this.next()
+      } else if (key === prev) {
+        this.prev()
+      }
+    })
   }
 
   play (index) {

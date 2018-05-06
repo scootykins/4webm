@@ -4,6 +4,11 @@ import fscreen from 'fscreen'
 import Player from './player'
 import { $ } from './util'
 
+const remote = {
+  next: 'right',
+  prev: 'left',
+  pause: 'space'
+}
 const player = new Player({
   video: $('#player'),
   status: $('#status'),
@@ -11,6 +16,8 @@ const player = new Player({
   title: $('#filename'),
   save: $('#save')
 })
+
+player.registerRemote(remote)
 
 if (fscreen.fullscreenEnabled) {
   $('#fullscreen').classList.remove('hide')
