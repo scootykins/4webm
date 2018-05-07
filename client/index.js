@@ -8,8 +8,7 @@ const player = new Player({
   video: $('#player'),
   status: $('#status'),
   playlist: $('#playlist'),
-  title: $('#filename'),
-  save: $('#save')
+  title: $('#filename')
 })
 
 if (fscreen.fullscreenEnabled) {
