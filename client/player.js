@@ -12,6 +12,7 @@ class Player {
     this._$status = dom.status
     this._$title = dom.title
     this._$save = dom.save
+    this._$loop = dom.loop
     this._index = 0
     this._webmUrls = []
     this._filenames = []
@@ -20,6 +21,9 @@ class Player {
 
     this._$video.addEventListener('canplay', this._$video.play)
     this._$video.addEventListener('ended', this.next.bind(this))
+    this._$loop.addEventListener('click', (e) => {
+      this.loop = this._$loop.checked
+    })
   }
 
   async load (threadUrl) {
@@ -62,7 +66,7 @@ class Player {
     this.play(index)
   }
 
-  registerRemote ({ toggle, next, prev }) {
+  registerRemote ({ toggle, next, prev, fullscreen, loop }) {
     const handler = (e) => {
       e.preventDefault()
 
@@ -78,6 +82,12 @@ class Player {
         this.next()
       } else if (key === prev) {
         this.prev()
+      } else if (key === fullscreen) {
+        if (this._$video.requestFullscreen) {
+          this._$video.requestFullscreen()
+        }
+      } else if (key === loop) {
+        this._toggleLoop()
       }
     }
 
@@ -118,8 +128,14 @@ class Player {
     this._playlist.hideThumbnails()
   }
 
+  _toggleLoop () {
+    this._$video.loop = !this._$video.loop
+    this._$loop.checked = !this._$loop.checked
+  }
+
   set loop (toggle) {
     this._$video.loop = toggle
+    this._$loop.checked = toggle
   }
 
   _play () {

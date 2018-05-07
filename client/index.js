@@ -8,14 +8,17 @@ import { $ } from './util'
 const remote = {
   next: 'right',
   prev: 'left',
-  toggle: 'space'
+  toggle: 'space',
+  fullscreen: 'f',
+  loop: 'l'
 }
 const player = new Player({
   video: $('#player'),
   status: $('#status'),
   playlist: $('#playlist'),
   title: $('#filename'),
-  save: $('#save')
+  save: $('#save'),
+  loop: $('#loop')
 })
 
 document.body.addEventListener('keydown', (e) => {
@@ -37,10 +40,6 @@ if (fscreen.fullscreenEnabled) {
 if (window.location.pathname !== '/') {
   player.load(window.location.href)
 }
-
-$('#loop').addEventListener('click', e => {
-  player.loop = $('#loop').checked
-})
 
 $('#thread-form').addEventListener('submit', e => {
   e.preventDefault()
