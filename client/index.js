@@ -1,5 +1,6 @@
 'use strict'
 
+import keycode from 'keycode'
 import fscreen from 'fscreen'
 import Player from './player'
 import { $ } from './util'
@@ -15,6 +16,12 @@ const player = new Player({
   playlist: $('#playlist'),
   title: $('#filename'),
   save: $('#save')
+})
+
+document.body.addEventListener('keydown', (e) => {
+  if (keycode(e) === 'space') {
+    e.preventDefault()
+  }
 })
 
 player.registerRemote(remote)
