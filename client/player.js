@@ -11,7 +11,6 @@ class Player {
     this._$video = dom.video
     this._$status = dom.status
     this._$title = dom.title
-    this._$save = dom.save
     this._$loop = dom.loop
     this._index = 0
     this._webmUrls = []
@@ -140,7 +139,6 @@ class Player {
 
   _play () {
     this._$video.src = this._webmUrls[this._index]
-    this._$save.href = this._webmUrls[this._index]
     this._$status.innerHTML = `${this._index + 1} / ${this._webmUrls.length}`
     this._$title.innerHTML = `${this._filenames[this._index]}.webm`
     window.location.hash = this._index + 1

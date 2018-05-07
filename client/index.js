@@ -17,8 +17,8 @@ const player = new Player({
   status: $('#status'),
   playlist: $('#playlist'),
   title: $('#filename'),
-  save: $('#save'),
-  loop: $('#loop')
+  loop: $('#loop'),
+  title: $('#filename')
 })
 
 document.body.addEventListener('keydown', (e) => {
