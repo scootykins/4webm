@@ -1,9 +1,15 @@
 'use strict'
 
+import keycode from 'keycode'
 import fscreen from 'fscreen'
 import Player from './player'
 import { $ } from './util'
 
+const remote = {
+  next: 'right',
+  prev: 'left',
+  toggle: 'space'
+}
 const player = new Player({
   video: $('#player'),
   status: $('#status'),
@@ -11,6 +17,14 @@ const player = new Player({
   title: $('#filename'),
   save: $('#save')
 })
+
+document.body.addEventListener('keydown', (e) => {
+  if (keycode(e) === 'space') {
+    e.preventDefault()
+  }
+})
+
+player.registerRemote(remote)
 
 if (fscreen.fullscreenEnabled) {
   $('#fullscreen').classList.remove('hide')
