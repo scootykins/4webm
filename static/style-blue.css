@@ -57,6 +57,7 @@ body {
 }
 #filename {
   text-align: center;
+  display: block;
 }
 .subject {
   color: #0f0c5d;

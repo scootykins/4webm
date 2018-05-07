@@ -3,6 +3,7 @@
 import keycode from 'keycode'
 import fscreen from 'fscreen'
 import Player from './player'
+import registerRemote from './remote'
 import { $ } from './util'
 
 const remote = {
@@ -14,20 +15,25 @@ const remote = {
 }
 const player = new Player({
   video: $('#player'),
-  status: $('#status'),
-  playlist: $('#playlist'),
-  title: $('#filename'),
-  loop: $('#loop'),
-  title: $('#filename')
+  playlist: $('#playlist')
 })
+
+player.on('change', (state) => {
+  console.log(state)
+
+  $('#status').innerHTML = `${state.index + 1} / ${state.total}`
+  $('#filename').innerHTML = `${state.title}.webm`
+  $('#filename').href = state.url
+  $('#loop').checked = state.loop
+})
+
+registerRemote(remote, player)
 
 document.body.addEventListener('keydown', (e) => {
   if (keycode(e) === 'space') {
     e.preventDefault()
   }
 })
-
-player.registerRemote(remote)
 
 if (fscreen.fullscreenEnabled) {
   $('#fullscreen').classList.remove('hide')
