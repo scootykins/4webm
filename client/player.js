@@ -1,24 +1,36 @@
 'use strict'
 
 import * as axios from 'axios'
-import keycode from 'keycode'
 import boards from '4chan-boards'
 import Playlist from './playlist'
+import Reactor from './reactor'
 import { collector } from './util'
 
 class Player {
+  /**
+   * Create a 4webm player
+   * @param {object}  dom
+   * @param {Element} dom.video
+   * @param {Element} dom.playlist
+   */
   constructor (dom) {
-    this._$video = dom.video
-    this._$status = dom.status
-    this._$title = dom.title
-    this._index = 0
+    this.$video = dom.video
+    this._state = {
+      index: 0,
+      total: 0,
+      loop: false,
+      title: '',
+      url: '',
+      paused: false
+    }
+
     this._webmUrls = []
     this._filenames = []
     this._playlist = new Playlist(dom.playlist)
-    this._thumbnails = false
+    this._reactor = new Reactor()
 
-    this._$video.addEventListener('canplay', this._$video.play)
-    this._$video.addEventListener('ended', this.next.bind(this))
+    this.$video.addEventListener('canplay', this.$video.play)
+    this.$video.addEventListener('ended', this.next.bind(this))
   }
 
   async load (threadUrl) {
@@ -58,76 +70,70 @@ class Player {
       ? Number(fragment) - 1
       : 0
 
+    this.state = { total: this._webmUrls.length }
     this.play(index)
   }
 
-  registerRemote ({ toggle, next, prev }) {
-    const handler = (e) => {
-      e.preventDefault()
+  play (index) {
+    this.state = { paused: false }
 
-      const key = keycode(e)
-
-      if (key === toggle) {
-        if (this._$video.paused === true) {
-          this._$video.play()
-        } else {
-          this._$video.pause()
-        }
-      } else if (key === next) {
-        this.next()
-      } else if (key === prev) {
-        this.prev()
+    if (index < this._webmUrls.length && index >= 0) {
+      this.state = {
+        index,
+        title: this._filenames[index],
+        url: this._webmUrls[index]
       }
-    }
 
-    document.body.removeEventListener('keyup', handler)
-    document.body.addEventListener('keyup', handler)
+      this.$video.src = this._webmUrls[index]
+      window.location.hash = index + 1
+      this._playlist.update(index)
+      this.$video.load()
+    } else {
+      this.$video.play()
+    }
   }
 
-  play (index) {
-    if (index < this._webmUrls.length && index >= 0) {
-      this._index = index
-      this._play()
-    }
+  pause () {
+    this.state = { paused: true }
+    this.$video.pause()
   }
 
   next () {
-    if (this._webmUrls.length - 1 > this._index) {
-      this.play(this._index + 1)
+    if (this._webmUrls.length - 1 > this.state.index) {
+      this.play(this.state.index + 1)
     } else {
       this.play(0)
     }
   }
 
   prev () {
-    if (this._index > 0) {
-      this.play(this._index - 1)
+    if (this.state.index > 0) {
+      this.play(this.state.index - 1)
     } else {
       this.play(this._webmUrls.length - 1)
     }
   }
 
-  showThumbnails () {
-    this._thumbnails = true
-    this._playlist.showThumbnails()
+  toggleLoop () {
+    this.state = { loop: !(this.state.loop) }
+    this.$video.loop = this.state.loop
   }
 
-  hideThumbnails () {
-    this._thumbnails = false
-    this._playlist.hideThumbnails()
+  on (...args) {
+    this._reactor.on(...args)
   }
 
-  set loop (toggle) {
-    this._$video.loop = toggle
+  _emit (...args) {
+    this._reactor.emit(...args)
   }
 
-  _play () {
-    this._$video.src = this._webmUrls[this._index]
-    this._$status.innerHTML = `${this._index + 1} / ${this._webmUrls.length}`
-    this._$title.innerHTML = `${this._filenames[this._index]}.webm`
-    window.location.hash = this._index + 1
-    this._playlist.update(this._index)
-    this._$video.load()
+  get state () {
+    return this._state
+  }
+
+  set state (partial) {
+    Object.assign(this._state, partial)
+    this._emit('change', this.state)
   }
 }
 

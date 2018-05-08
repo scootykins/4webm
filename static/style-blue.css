@@ -22,6 +22,7 @@ body {
   text-align: center;
 }
 .player-cnt {
+  margin-top: 10px;
   text-align: left;
   width: 660px;
   display: inline-block;
@@ -57,6 +58,7 @@ body {
 }
 #filename {
   text-align: center;
+  display: block;
 }
 .subject {
   color: #0f0c5d;

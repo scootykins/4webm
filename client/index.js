@@ -3,27 +3,41 @@
 import keycode from 'keycode'
 import fscreen from 'fscreen'
 import Player from './player'
+import registerRemote from './remote'
 import { $ } from './util'
 
 const remote = {
   next: 'right',
   prev: 'left',
-  toggle: 'space'
+  toggle: 'space',
+  fullscreen: 'f',
+  loop: 'l',
+  lowerVolume: 'down',
+  raiseVolume: 'up'
 }
 const player = new Player({
   video: $('#player'),
-  status: $('#status'),
-  playlist: $('#playlist'),
-  title: $('#filename')
+  playlist: $('#playlist')
 })
 
+player.on('change', (state) => {
+  console.log(state)
+
+  $('#status').innerHTML = `${state.index + 1} / ${state.total}`
+  $('#filename').innerHTML = `${state.title}.webm`
+  $('#filename').href = state.url
+  $('#loop').checked = state.loop
+})
+
+registerRemote(remote, player)
+
 document.body.addEventListener('keydown', (e) => {
-  if (keycode(e) === 'space') {
+  const ignore = ['space', 'up', 'down']
+
+  if (ignore.includes(keycode(e))) {
     e.preventDefault()
   }
 })
-
-player.registerRemote(remote)
 
 if (fscreen.fullscreenEnabled) {
   $('#fullscreen').classList.remove('hide')
@@ -36,10 +50,6 @@ if (fscreen.fullscreenEnabled) {
 if (window.location.pathname !== '/') {
   player.load(window.location.href)
 }
-
-$('#loop').addEventListener('click', e => {
-  player.loop = $('#loop').checked
-})
 
 $('#thread-form').addEventListener('submit', e => {
   e.preventDefault()
