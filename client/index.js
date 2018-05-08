@@ -11,7 +11,9 @@ const remote = {
   prev: 'left',
   toggle: 'space',
   fullscreen: 'f',
-  loop: 'l'
+  loop: 'l',
+  lowerVolume: 'down',
+  raiseVolume: 'up'
 }
 const player = new Player({
   video: $('#player'),
@@ -30,7 +32,9 @@ player.on('change', (state) => {
 registerRemote(remote, player)
 
 document.body.addEventListener('keydown', (e) => {
-  if (keycode(e) === 'space') {
+  const ignore = ['space', 'up', 'down']
+
+  if (ignore.includes(keycode(e))) {
     e.preventDefault()
   }
 })

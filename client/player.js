@@ -116,6 +116,7 @@ class Player {
 
   toggleLoop () {
     this.state = { loop: !(this.state.loop) }
+    this.$video.loop = this.state.loop
   }
 
   on (...args) {
