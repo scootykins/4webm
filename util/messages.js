@@ -1,7 +1,7 @@
 const bannerMsgs = [
   `
 You can also load a thread by replacing '4chan' with '4webm' in a thread URL and visiting it`,
-  `Left/right arrow keys now skip to prev/next video, and spacebar toggles pause/play`
+  `Keyboard shortcuts: Left/right -> prev/next, up/down -> volume, spacebar -> pause/play, l -> loop, f -> fullscreen`
 ]
 
 const invalidMsg = `
