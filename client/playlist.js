@@ -23,7 +23,6 @@ class Playlist {
       const num = i + 1
 
       $a.innerHTML = `${num}. ${filename}.webm`
-      $a.id = num
       $a.className = 'webm-link'
       $a.addEventListener('click', () => handler(i))
 
@@ -48,6 +47,7 @@ class Playlist {
       .forEach((elem, i) => {
         if (index === i) {
           elem.classList.add(classname)
+          elem.scrollIntoView()
         } else {
           elem.classList.remove(classname)
         }
