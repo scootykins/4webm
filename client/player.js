@@ -85,7 +85,7 @@ class Player {
       }
 
       this.$video.src = this._webmUrls[index]
-      history.replaceState(null, null, `#${index + 1}`)
+      window.history.replaceState(null, null, `#${index + 1}`)
       this._playlist.update(index)
       this.$video.load()
     } else {
