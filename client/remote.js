@@ -36,7 +36,7 @@ function registerRemote (buttons, player) {
         player.toggleLoop()
         break
       case lowerVolume:
-        player.toggleLoop()
+        player.speaker.lower()
         break
       case raiseVolume:
         player.speaker.raise()
