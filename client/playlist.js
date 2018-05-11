@@ -47,6 +47,7 @@ class Playlist {
       .forEach((elem, i) => {
         if (index === i) {
           elem.classList.add(classname)
+          elem.scrollIntoView()
         } else {
           elem.classList.remove(classname)
         }
