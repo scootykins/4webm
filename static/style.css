@@ -41,8 +41,8 @@ body {
   word-wrap: break-word;
   display: inline-block;
   vertical-align: top;
-  margin: 10px;
-} 
+  padding: 10px;
+}
 .playlist-item {
   margin: 5px;
 }
