@@ -4,6 +4,7 @@ import * as axios from 'axios'
 import boards from '4chan-boards'
 import Playlist from './playlist'
 import Reactor from './reactor'
+import Speaker from './speaker'
 import { collector } from './util'
 
 class Player {
@@ -15,15 +16,16 @@ class Player {
    */
   constructor (dom) {
     this.$video = dom.video
+    this.speaker = new Speaker(this.$video)
+
     this._state = {
       index: 0,
       total: 0,
       loop: false,
       title: '',
       url: '',
-      paused: false
+      paused: true
     }
-
     this._webmUrls = []
     this._filenames = []
     this._playlist = new Playlist(dom.playlist)

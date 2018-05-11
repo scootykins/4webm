@@ -10,6 +10,7 @@ function registerRemote (buttons, player) {
     prev,
     fullscreen,
     loop,
+    mute,
     raiseVolume,
     lowerVolume
   } = buttons
@@ -17,30 +18,41 @@ function registerRemote (buttons, player) {
   const handler = (e) => {
     e.preventDefault()
 
-    const key = keycode(e)
-
-    if (key === toggle) {
-      if (player.state.paused) {
-        player.play()
-      } else {
-        player.pause()
-      }
-    } else if (key === next) {
-      player.next()
-    } else if (key === prev) {
-      player.prev()
-    } else if (key === loop) {
-      player.toggleLoop()
-    } else if (key === lowerVolume) {
-      player.$video.volume -= 10 / 100
-    } else if (key === raiseVolume) {
-      player.$video.volume += 10 / 100
-    } else if (key === fullscreen && fscreen.fullscreenEnabled) {
-      if (fscreen.fullscreenElement !== null) {
-        fscreen.exitFullscreen()
-      } else {
-        fscreen.requestFullscreen(player.$video)
-      }
+    switch (keycode(e)) {
+      case toggle:
+        if (player.state.paused) {
+          player.play()
+        } else {
+          player.pause()
+        }
+        break
+      case next:
+        player.next()
+        break
+      case prev:
+        player.prev()
+        break
+      case loop:
+        player.toggleLoop()
+        break
+      case lowerVolume:
+        player.toggleLoop()
+        break
+      case raiseVolume:
+        player.speaker.raise()
+        break
+      case mute:
+        player.speaker.toggle()
+        break
+      case fullscreen:
+        if (fscreen.fullscreenEnabled) {
+          if (fscreen.fullscreenElement !== null) {
+            fscreen.exitFullscreen()
+          } else {
+            fscreen.requestFullscreen(player.$video)
+          }
+        }
+        break
     }
   }
 

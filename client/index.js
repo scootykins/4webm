@@ -12,6 +12,7 @@ const remote = {
   toggle: 'space',
   fullscreen: 'f',
   loop: 'l',
+  mute: 'm',
   lowerVolume: 'down',
   raiseVolume: 'up'
 }
