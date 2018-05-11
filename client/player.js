@@ -86,6 +86,7 @@ class Player {
 
       this.$video.src = this._webmUrls[index]
       window.location.hash = index + 1
+      console.log(window.location.hash)
       this._playlist.update(index)
       this.$video.load()
     } else {
