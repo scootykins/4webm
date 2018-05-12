@@ -107,6 +107,8 @@ class Player {
       window.history.replaceState(null, null, `#${index + 1}`)
       this._playlist.update(index)
       this._$video.load()
+    } else {
+      this._$video.play()
     }
   }
 
