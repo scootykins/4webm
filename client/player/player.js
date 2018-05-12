@@ -78,7 +78,12 @@ class Player {
       '4webm'
     ].join(' - ')
     this._playlist.update(index)
-    this.state.set({ index, total: this._webmUrls.length })
+    this.state.set({
+      index,
+      url: this._webmUrls[index],
+      title: this._filenames[index],
+      total: this._webmUrls.length
+    })
 
     if (this._$video.src === '') {
       this._$video.src = this._webmUrls[index]
@@ -91,13 +96,12 @@ class Player {
    * @param {boolean} [snap=true]   Determines whether playlist will auto scroll
    */
   play (index, snap = true) {
-    this.state.set({ paused: false })
-
     if (index < this._webmUrls.length && index >= 0) {
       this.state.set({
         index,
         title: this._filenames[index],
-        url: this._webmUrls[index]
+        url: this._webmUrls[index],
+        paused: false
       })
 
       this._$video.src = this._webmUrls[index]
@@ -105,6 +109,8 @@ class Player {
       this._playlist.update(index, snap)
       this._$video.load()
     } else {
+      this.state.set({ paused: false })
+
       this.play(this.state.index)
     }
   }
