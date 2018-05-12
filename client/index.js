@@ -48,12 +48,16 @@ if (fscreen.fullscreenEnabled) {
   })
 }
 
-if (window.location.pathname !== '/') {
-  player.load(window.location.href)
+async function init () {
+  if (window.location.pathname !== '/') {
+    await player.load(window.location.href)
+  }
 }
+init()
 
-interact('#thread-form', 'submit', () => {
-  player.load($('#thread-url').value)
+interact('#thread-form', 'submit', async () => {
+  await player.load($('#thread-url').value)
+  player.play()
 })
 
 interact('#next', 'click', () => {
@@ -80,9 +84,9 @@ interact('#gen-playlist', 'click', () => {
 })
 
 interact('#goto', 'submit', () => {
-  player.goto($('#goto-input').value - 1)
+  player.play($('#goto-input').value - 1)
 })
 
-interact('#update', 'click', () => {
-  player.load(window.location.href)
+interact('#update', 'click', async () => {
+  await player.load(window.location.href)
 })
