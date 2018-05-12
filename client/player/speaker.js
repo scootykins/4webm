@@ -1,6 +1,6 @@
 'use strict'
 
-import { createClamp } from './util'
+import { createClamp } from '../util'
 
 const clamp = createClamp(0, 1)
 
