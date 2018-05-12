@@ -80,7 +80,7 @@ class Player {
     this._playlist.update(index)
     this.state.set({ index, total: this._webmUrls.length })
 
-    if (this._$video.src === "") {
+    if (this._$video.src === '') {
       this._$video.src = this._webmUrls[index]
     }
   }
