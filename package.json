@@ -9,7 +9,8 @@
     "test": "standard",
     "build": "webpack",
     "sdev": "nodemon ./bin/www --ignore /static --ignore /client",
-    "cdev": "webpack --watch"
+    "cdev": "webpack --watch",
+    "precommit": "yarn run test"
   },
   "standard": {
     "ignore": [
@@ -32,6 +33,7 @@
     "babel-loader": "^7.1.4",
     "babel-preset-es2015": "^6.24.1",
     "fscreen": "^1.0.2",
+    "husky": "^0.14.3",
     "keycode": "^2.2.0",
     "nodemon": "^1.14.7",
     "standard": "^11.0.1",
