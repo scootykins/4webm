@@ -39,7 +39,7 @@ class Playlist {
     })
   }
 
-  update (index, classname = 'active') {
+  update (index, snap = true, classname = 'active') {
     Array.from(this._$playlist.childNodes)
       .filter(x => x.tagName === 'DIV')
       .map(item => Array.from(item.childNodes))
@@ -47,7 +47,10 @@ class Playlist {
       .forEach((elem, i) => {
         if (index === i) {
           elem.classList.add(classname)
-          elem.scrollIntoView()
+
+          if (snap) {
+            elem.scrollIntoView()
+          }
         } else {
           elem.classList.remove(classname)
         }

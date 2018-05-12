@@ -64,7 +64,7 @@ class Player {
       this._filenames,
       collect('thumbnail'),
       res.data.subject,
-      this.play.bind(this)
+      (i) => this.play(i, false)
     )
 
     const index = fragment && Number(fragment) <= this._webmUrls.length
@@ -85,7 +85,12 @@ class Player {
     }
   }
 
-  play (index) {
+  /**
+   * @method play
+   * @param {number}  index  Index of the video to play
+   * @param {boolean} [snap=true]   Determines whether playlist will auto scroll
+   */
+  play (index, snap = true) {
     this.state.set({ paused: false })
 
     if (index < this._webmUrls.length && index >= 0) {
@@ -97,7 +102,7 @@ class Player {
 
       this._$video.src = this._webmUrls[index]
       window.history.replaceState(null, null, `#${index + 1}`)
-      this._playlist.update(index)
+      this._playlist.update(index, snap)
       this._$video.load()
     } else {
       this.play(this.state.index)
