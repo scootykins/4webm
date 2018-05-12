@@ -11,4 +11,3 @@ const server = http.createServer(app)
 server.listen(webPort, () => {
   console.log(`Listening on port ${webPort}`)
 })
-

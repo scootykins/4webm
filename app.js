@@ -12,8 +12,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.enable('trust proxy')
-app.set('view engine', 'hbs')
 app.use(routes)
-app.use(express.static(path.join(__dirname, './static')))
+app.use(express.static(path.join(__dirname, './dist')))
 
 module.exports = app

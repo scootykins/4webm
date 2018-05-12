@@ -4,13 +4,7 @@
     <title>4webm</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107224177-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-107224177-2');
-    </script>
+    <script src="./analytics.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="{{favicon}}"/>
     <link rel="stylesheet" href="{{global_style}}" />
     <link rel="stylesheet" href="{{style}}" />
@@ -37,9 +31,8 @@
     </form>
     <hr />
     <div class="globalMessage">
-      {{#each messages}}
-        <h3>{{this}}</h3>
-      {{/each}}
+      <h3>You can also load a thread by replacing '4chan' with '4webm' in a thread URL and visiting it</h3>
+      <h3>Keyboard shortcuts: Left/right -> prev/next, up/down -> volume, spacebar -> pause/play, l -> loop, f -> fullscreen</h3>
     </div>
     <hr />
     <div class='body-cnt'>
@@ -72,9 +65,17 @@
       <div class="footerLinks">
         [<a id="return" href="#">Return</a>]
         [<a id="update" href="#">Update</a>]
+        <select id="styleSelector">
+          <option value="yotsuba">Yotsuba</option>
+          <option value="yotsublue">Yotsuba B</option>
+          <option value="yotsuba">Futuba</option>
+          <option value="yotsuba">Burichan</option>
+          <option value="yotsuba">Yotsuba</option>
+          <option value="yotsuba">Yotsuba</option>
+        </select>
       </div>
       <hr>
     </div>
-    <script src="/bundle.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>
