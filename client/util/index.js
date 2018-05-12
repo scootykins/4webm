@@ -1,8 +1,7 @@
 'use strict'
 
 export const regex = {
-  thread: /(.*)\/(.*)\/thread\/(\d*)(?:#.*)?/,
-  fragment: /(.*)(?:#(\d*))?/
+  thread: /(.*)\/(.*)\/thread\/(\d*)(?:#(\d*))?/
 }
 
 export function createClamp (min, max) {

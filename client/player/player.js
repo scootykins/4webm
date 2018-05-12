@@ -37,12 +37,12 @@ class Player {
   }
 
   /**
-   * Fetch updated thread data without changing state
-   * @async update
+   * Fetch thread data
+   * @async load
    * @param {string} threadUrl
    */
-  async update (threadUrl) {
-    const [,, board, threadNo] = regex.thread.exec(threadUrl)
+  async load (threadUrl) {
+    const [,, board, threadNo, fragment] = regex.thread.exec(threadUrl)
     let res
 
     this._playlist.flash('Loading...')
@@ -56,12 +56,6 @@ class Player {
       return
     }
 
-    document.title = [
-      `/${board}/`,
-      res.data.subject,
-      boards.getName(board),
-      '4webm'
-    ].join(' - ')
     const collect = collector(res.data.webms)
 
     this._webmUrls = collect('url')
@@ -72,25 +66,23 @@ class Player {
       res.data.subject,
       this.play.bind(this)
     )
-    this._playlist.update(this.state.index)
-    this.state.set({ total: this._webmUrls.length })
-  }
 
-  /**
-   * Updates data then parses URL for fragment index, then plays
-   * @async load
-   * @param threadUrl
-   */
-  async load (threadUrl) {
-    await this.update(threadUrl)
-
-    const fragment = regex.fragment.exec(threadUrl)
     const index = fragment && Number(fragment) <= this._webmUrls.length
       ? Number(fragment) - 1
       : 0
 
-    this.state.set({ index })
-    this.play(index)
+    document.title = [
+      `/${board}/`,
+      res.data.subject,
+      boards.getName(board),
+      '4webm'
+    ].join(' - ')
+    this._playlist.update(index)
+    this.state.set({ index, total: this._webmUrls.length })
+
+    if (this._$video.src === "") {
+      this._$video.src = this._webmUrls[index]
+    }
   }
 
   play (index) {
@@ -108,7 +100,7 @@ class Player {
       this._playlist.update(index)
       this._$video.load()
     } else {
-      this._$video.play()
+      this.play(this.state.index)
     }
   }
 

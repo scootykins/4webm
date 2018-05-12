@@ -84,5 +84,5 @@ interact('#goto', 'submit', () => {
 })
 
 interact('#update', 'click', () => {
-  player.update(window.location.href)
+  player.load(window.location.href)
 })
