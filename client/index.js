@@ -3,10 +3,10 @@
 import keycode from 'keycode'
 import fscreen from 'fscreen'
 import Player from './player'
-import registerRemote from './remote'
-import { $ } from './util'
+import returnTo4chan from './chan/return'
+import { $, interact } from './util'
 
-const remote = {
+const controls = {
   next: 'right',
   prev: 'left',
   toggle: 'space',
@@ -21,7 +21,7 @@ const player = new Player({
   playlist: $('#playlist')
 })
 
-player.on('change', (state) => {
+player.state.on('change', (state) => {
   console.log(state)
 
   $('#status').innerHTML = `${state.index + 1} / ${state.total}`
@@ -30,7 +30,7 @@ player.on('change', (state) => {
   $('#loop').checked = state.loop
 })
 
-registerRemote(remote, player)
+player.remote.register(controls)
 
 document.body.addEventListener('keydown', (e) => {
   const ignore = ['space', 'up', 'down']
@@ -42,8 +42,8 @@ document.body.addEventListener('keydown', (e) => {
 
 if (fscreen.fullscreenEnabled) {
   $('#fullscreen').classList.remove('hide')
-  $('#fullscreen').addEventListener('click', e => {
-    e.preventDefault()
+
+  interact('#fullscreen', 'click', () => {
     fscreen.requestFullscreen($('#player'))
   })
 }
@@ -52,35 +52,37 @@ if (window.location.pathname !== '/') {
   player.load(window.location.href)
 }
 
-$('#thread-form').addEventListener('submit', e => {
-  e.preventDefault()
+interact('#thread-form', 'submit', () => {
   player.load($('#thread-url').value)
 })
 
-$('#next').addEventListener('click', e => {
-  e.preventDefault()
+interact('#next', 'click', () => {
   player.next()
 })
 
-$('#prev').addEventListener('click', e => {
-  e.preventDefault()
+interact('#prev', 'click', () => {
   player.prev()
 })
 
-$('#show-goto').addEventListener('click', e => {
-  e.preventDefault()
+interact('#show-goto', 'click', () => {
   $('#goto').classList.toggle('hide')
   $('#goto-input').focus()
 })
 
-$('#goto').addEventListener('submit', e => {
-  e.preventDefault()
-  player.play($('#goto-input').value - 1)
+interact('#return', 'click', () => {
+  returnTo4chan()
 })
 
-$('#gen-playlist').addEventListener('click', e => {
-  e.preventDefault()
+interact('#gen-playlist', 'click', () => {
   $('#thread-form').classList.remove('hide')
   $('#togglePostFormLink').classList.add('hide')
   $('#thread-url').focus()
+})
+
+interact('#goto', 'submit', () => {
+  player.goto($('#goto-input').value - 1)
+})
+
+interact('#update', 'click', () => {
+  player.load(window.location.href)
 })

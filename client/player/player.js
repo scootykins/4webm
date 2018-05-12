@@ -3,9 +3,10 @@
 import * as axios from 'axios'
 import boards from '4chan-boards'
 import Playlist from './playlist'
-import Reactor from './reactor'
+import Remote from './remote'
+import State from './state'
 import Speaker from './speaker'
-import { collector } from './util'
+import { regex, collector } from '../util'
 
 class Player {
   /**
@@ -15,29 +16,33 @@ class Player {
    * @param {Element} dom.playlist
    */
   constructor (dom) {
-    this.$video = dom.video
-    this.speaker = new Speaker(this.$video)
-
-    this._state = {
+    this._$video = dom.video
+    this.speaker = new Speaker(this._$video)
+    this.remote = new Remote(this)
+    this.state = new State({
       index: 0,
       total: 0,
       loop: false,
       title: '',
       url: '',
       paused: true
-    }
+    })
+
     this._webmUrls = []
     this._filenames = []
     this._playlist = new Playlist(dom.playlist)
-    this._reactor = new Reactor()
 
-    this.$video.addEventListener('canplay', this.$video.play)
-    this.$video.addEventListener('ended', this.next.bind(this))
+    this._$video.addEventListener('canplay', this._$video.play)
+    this._$video.addEventListener('ended', this.next.bind(this))
   }
 
+  /**
+   * Fetch thread data
+   * @async load
+   * @param {string} threadUrl
+   */
   async load (threadUrl) {
-    const threadRegex = /(.*)\/(.*)\/thread\/(\d*)(?:#(\d*))?/g
-    const [,, board, threadNo, fragment] = threadRegex.exec(threadUrl)
+    const [,, board, threadNo, fragment] = regex.thread.exec(threadUrl)
     let res
 
     this._playlist.flash('Loading...')
@@ -51,12 +56,6 @@ class Player {
       return
     }
 
-    document.title = [
-      `/${board}/`,
-      res.data.subject,
-      boards.getName(board),
-      '4webm'
-    ].join(' - ')
     const collect = collector(res.data.webms)
 
     this._webmUrls = collect('url')
@@ -72,32 +71,42 @@ class Player {
       ? Number(fragment) - 1
       : 0
 
-    this.state = { total: this._webmUrls.length }
-    this.play(index)
+    document.title = [
+      `/${board}/`,
+      res.data.subject,
+      boards.getName(board),
+      '4webm'
+    ].join(' - ')
+    this._playlist.update(index)
+    this.state.set({ index, total: this._webmUrls.length })
+
+    if (this._$video.src === '') {
+      this._$video.src = this._webmUrls[index]
+    }
   }
 
   play (index) {
-    this.state = { paused: false }
+    this.state.set({ paused: false })
 
     if (index < this._webmUrls.length && index >= 0) {
-      this.state = {
+      this.state.set({
         index,
         title: this._filenames[index],
         url: this._webmUrls[index]
-      }
+      })
 
-      this.$video.src = this._webmUrls[index]
+      this._$video.src = this._webmUrls[index]
       window.history.replaceState(null, null, `#${index + 1}`)
       this._playlist.update(index)
-      this.$video.load()
+      this._$video.load()
     } else {
-      this.$video.play()
+      this.play(this.state.index)
     }
   }
 
   pause () {
-    this.state = { paused: true }
-    this.$video.pause()
+    this.state.set({ paused: true })
+    this._$video.pause()
   }
 
   next () {
@@ -117,25 +126,12 @@ class Player {
   }
 
   toggleLoop () {
-    this.state = { loop: !(this.state.loop) }
-    this.$video.loop = this.state.loop
+    this.state.set({ loop: !(this.state.loop) })
+    this._$video.loop = this.state.loop
   }
 
-  on (...args) {
-    this._reactor.on(...args)
-  }
-
-  _emit (...args) {
-    this._reactor.emit(...args)
-  }
-
-  get state () {
-    return this._state
-  }
-
-  set state (partial) {
-    Object.assign(this._state, partial)
-    this._emit('change', this.state)
+  getVideoElement () {
+    return this._$video
   }
 }
 
