@@ -25,6 +25,14 @@ export function returnTo4chan () {
   window.location.href = url
 }
 
+export function boardFromUrl (url) {
+  return regex.thread.exec(url)[1]
+}
+
+export function getSelectedOpt ($select) {
+  return $select.options[$select.selectedValue].value
+}
+
 export function interact (slt, event, handler) {
   $(slt).addEventListener(event, e => {
     e.preventDefault()

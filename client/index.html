@@ -5,14 +5,19 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107224177-2"></script>
     <script src="./analytics.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="{{favicon}}"/>
-    <link rel="stylesheet" href="{{global_style}}" />
-    <link rel="stylesheet" href="{{style}}" />
+    <link id="icon" rel="shortcut icon" type="image/x-icon" />
+    <link id="switch" rel="stylesheet" />
+    <link rel="alternate stylesheet" href="./vendor/yotsublue.css" />
+    <link rel="alternate stylesheet" href="./vendor/yotsuba.css" />
+    <link rel="alternate stylesheet" href="./vendor/burichan.css" />
+    <link rel="alternate stylesheet" href="./vendor/tomorrow.css" />
+    <link rel="alternate stylesheet" href="./vendor/futaba.css" />
+    <link rel="alternate stylesheet" href="./vendor/photon.css" />
   </head>
   <body>
     <div class="boardBanner">
       <div id="bannerCnt" class="title desktop">
-        <img alt="4chan" src="/banner.png" />
+        <img alt="4chan" src="./assets/banner.png" />
       </div>
       <div class="boardTitle">4webm</div>
       <div class="boardSubtitle">
@@ -66,6 +71,7 @@
         [<a id="return" href="#">Return</a>]
         [<a id="update" href="#">Update</a>]
         <select id="styleSelector">
+          <option value="auto">Auto</option>
           <option value="yotsuba">Yotsuba</option>
           <option value="yotsublue">Yotsuba B</option>
           <option value="yotsuba">Futuba</option>

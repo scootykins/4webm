@@ -2,7 +2,7 @@
 
 const path = require('path')
 const express = require('express')
-const routes = require('./routes/index')
+const routes = require('./routes')
 const enforce = require('express-sslify')
 
 const app = express()

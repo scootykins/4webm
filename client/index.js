@@ -3,8 +3,11 @@
 import keycode from 'keycode'
 import fscreen from 'fscreen'
 import Player from './player'
-import returnTo4chan from './chan/return'
-import { $, interact } from './util'
+import boards from '4chan-boards'
+import { $, interact, getBoardFromUrl, returnTo4chan, getSelectedOpt } from './util'
+import styles from './vendor'
+import icon from './assets/favicon.ico'
+import iconBlue from './assets/favicon-blue.ico'
 
 const controls = {
   next: 'right',
@@ -48,8 +51,41 @@ if (fscreen.fullscreenEnabled) {
   })
 }
 
-if (window.location.pathname !== '/') {
-  player.load(window.location.href)
+async function init () {
+  let board
+  const style = getSelectedOpt($('#styleSelector'))
+
+  if (window.location.pathname !== '/') {
+    await player.load(window.location.href)
+    board = getBoardFromUrl(window.location.href)
+  }
+
+  if (board && boards.getType(board) === boards.SFW) {
+    $('#icon').href = iconBlue
+  } else {
+    $('#icon').href = icon
+  }
+
+  if (style !== 'auto') {
+    setStyle(styles[style])
+  } else if (board && boards.getType(board) === boards.SFW) {
+    setStyle(styles['yotsublue'])
+  } else {
+    setStyle(styles['yotsuba'])
+  }
+}
+init()
+
+interact('#styleSelector', 'change', (e) => {
+  const style = $('#styleSelector').value
+
+  if (style !== 'auto') {
+    setStyle(styles[style])
+  }
+})
+
+function setStyle (url) {
+  $('#switch').href = url
 }
 
 interact('#thread-form', 'submit', () => {

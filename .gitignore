@@ -1,8 +1,9 @@
-/node_modules
-/thumbnail
-*.swo
+node_modules/
+thumbnail/
+dist/
+.cache/
 dump.rdb
-static/bundle.js
+*.swo
 *.swp
 *.log
 TODO.md
