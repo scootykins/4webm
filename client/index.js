@@ -13,6 +13,8 @@ const controls = {
   fullscreen: 'f',
   loop: 'l',
   mute: 'm',
+  seekForward: '.',
+  seekBackward: ',',
   lowerVolume: 'down',
   raiseVolume: 'up'
 }
