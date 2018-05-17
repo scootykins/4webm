@@ -16,6 +16,8 @@ class Remote {
       fullscreen,
       loop,
       mute,
+      seekForward,
+      seekBackward,
       raiseVolume,
       lowerVolume
     } = buttons
@@ -48,6 +50,12 @@ class Remote {
           break
         case mute:
           this._player.speaker.toggle()
+          break
+        case seekForward:
+          this._player.seek.forward()
+          break
+        case seekBackward:
+          this._player.seek.backward()
           break
         case fullscreen:
           if (fscreen.fullscreenEnabled) {

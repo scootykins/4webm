@@ -6,6 +6,7 @@ import Playlist from './playlist'
 import Remote from './remote'
 import State from './state'
 import Speaker from './speaker'
+import Seeker from './seeker'
 import { regex, collector } from '../util'
 
 class Player {
@@ -18,6 +19,7 @@ class Player {
   constructor (dom) {
     this._$video = dom.video
     this.speaker = new Speaker(this._$video)
+    this.seek = new Seeker(this._$video)
     this.remote = new Remote(this)
     this.state = new State({
       index: 0,
@@ -25,7 +27,7 @@ class Player {
       loop: false,
       title: '',
       url: '',
-      paused: true
+      paused: this._$video.paused
     })
 
     this._webmUrls = []
@@ -96,7 +98,11 @@ class Player {
    * @param {boolean} [snap=true]   Determines whether playlist will auto scroll
    */
   play (index, snap = true) {
-    if (index < this._webmUrls.length && index >= 0) {
+    if (index === this.state.index) {
+      this.state.set({ paused: false })
+
+      this._$video.play()
+    } else if (index < this._webmUrls.length && index >= 0) {
       this.state.set({
         index,
         title: this._filenames[index],
@@ -109,8 +115,6 @@ class Player {
       this._playlist.update(index, snap)
       this._$video.load()
     } else {
-      this.state.set({ paused: false })
-
       this.play(this.state.index)
     }
   }
