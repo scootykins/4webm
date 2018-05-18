@@ -2,11 +2,8 @@
 
 import * as axios from 'axios'
 import boards from '4chan-boards'
-import Playlist from './playlist'
-import Remote from './remote'
 import State from './state'
-import Speaker from './speaker'
-import Seeker from './seeker'
+import { Remote, Speaker, Playlist, Seeker, GUI } from './components'
 import { regex, collector } from '../util'
 
 class Player {
@@ -21,13 +18,14 @@ class Player {
     this.speaker = new Speaker(this._$video)
     this.seek = new Seeker(this._$video)
     this.remote = new Remote(this)
+    this.gui = new GUI(this)
     this.state = new State({
       index: 0,
       total: 0,
       loop: false,
       title: '',
       url: '',
-      paused: this._$video.paused
+      paused: true
     })
 
     this._webmUrls = []
@@ -39,7 +37,7 @@ class Player {
   }
 
   /**
-   * Fetch thread data
+   * Fetch thread data; plays if change in index
    * @async load
    * @param {string} threadUrl
    */
@@ -81,11 +79,14 @@ class Player {
     ].join(' - ')
     this._playlist.update(index)
     this.state.set({
-      index,
       url: this._webmUrls[index],
       title: this._filenames[index],
       total: this._webmUrls.length
     })
+
+    if (this.state.index !== index) {
+      this.play(index)
+    }
 
     if (this._$video.src === '') {
       this._$video.src = this._webmUrls[index]

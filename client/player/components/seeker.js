@@ -1,6 +1,6 @@
 'use strict'
 
-import { createClamp } from '../util'
+import { createClamp } from '../../util'
 
 class Seeker {
   constructor ($video, step = 0.10) {
