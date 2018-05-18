@@ -1,10 +1,8 @@
 'use strict'
 
 import keycode from 'keycode'
-import fscreen from 'fscreen'
 import Player from './player'
-import returnTo4chan from './chan/return'
-import { $, interact } from './util'
+import { $ } from './util'
 
 const controls = {
   next: 'right',
@@ -18,21 +16,38 @@ const controls = {
   lowerVolume: 'down',
   raiseVolume: 'up'
 }
+const gui = {
+  goto: $('#goto'),
+  gotoShow: $('#goto-show'),
+  gotoInput: $('#goto-input'),
+  chanReturn: $('#return'),
+  genPlaylist: $('#gen-playlist'),
+  next: $('#next'),
+  prev: $('#prev'),
+  update: $('#update'),
+  threadForm: $('#thread-form'),
+  threadFormShow: $('#togglePostFormLink'),
+  threadUrl: $('#thread-url'),
+  fullscreen: $('#fullscreen'),
+  loop: $('#loop'),
+  filename: $('#filename'),
+  status: $('#status')
+}
 const player = new Player({
   video: $('#player'),
   playlist: $('#playlist')
 })
 
+player.remote.register(controls)
+player.gui.register(gui)
+
 player.state.on('change', (state) => {
   console.log(state)
-
-  $('#status').innerHTML = `${state.index + 1} / ${state.total}`
-  $('#filename').innerHTML = `${state.title}.webm`
-  $('#filename').href = state.url
-  $('#loop').checked = state.loop
 })
 
-player.remote.register(controls)
+if (window.location.pathname !== '/') {
+  player.load(window.location.href)
+}
 
 document.body.addEventListener('keydown', (e) => {
   const ignore = ['space', 'up', 'down']
@@ -40,51 +55,4 @@ document.body.addEventListener('keydown', (e) => {
   if (ignore.includes(keycode(e))) {
     e.preventDefault()
   }
-})
-
-if (fscreen.fullscreenEnabled) {
-  $('#fullscreen').classList.remove('hide')
-
-  interact('#fullscreen', 'click', () => {
-    fscreen.requestFullscreen($('#player'))
-  })
-}
-
-if (window.location.pathname !== '/') {
-  player.load(window.location.href)
-}
-
-interact('#thread-form', 'submit', () => {
-  player.load($('#thread-url').value)
-})
-
-interact('#next', 'click', () => {
-  player.next()
-})
-
-interact('#prev', 'click', () => {
-  player.prev()
-})
-
-interact('#show-goto', 'click', () => {
-  $('#goto').classList.toggle('hide')
-  $('#goto-input').focus()
-})
-
-interact('#return', 'click', () => {
-  returnTo4chan()
-})
-
-interact('#gen-playlist', 'click', () => {
-  $('#thread-form').classList.remove('hide')
-  $('#togglePostFormLink').classList.add('hide')
-  $('#thread-url').focus()
-})
-
-interact('#goto', 'submit', () => {
-  player.goto($('#goto-input').value - 1)
-})
-
-interact('#update', 'click', () => {
-  player.load(window.location.href)
 })

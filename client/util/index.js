@@ -18,10 +18,9 @@ export function collector (arr) {
   }
 }
 
-export function interact (slt, event, handler) {
-  $(slt).addEventListener(event, e => {
-    e.preventDefault()
+export function returnTo4chan () {
+  const [,, board, threadNo] = regex.thread.exec(window.location.href)
+  const url = `https://boards.4chan.org/${board}/thread/${threadNo}`
 
-    handler(e)
-  })
+  window.location.href = url
 }
