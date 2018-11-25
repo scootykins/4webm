@@ -57,6 +57,7 @@ router.get('/:board/thread/:threadNo', async (req, res) => {
   }
 
   webmJson.webms.forEach((webm) => {
+    webm.url = `/proxy/${encodeURIComponent(webm.url)}`
     webm.thumbnail = webm.thumbnail.replace(reg, `/thumbnail/${board}/${threadNo}/$2`)
   })
 
