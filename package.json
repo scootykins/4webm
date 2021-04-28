@@ -10,7 +10,7 @@
     "build": "webpack",
     "sdev": "nodemon ./bin/www --ignore /static --ignore /client",
     "cdev": "webpack --watch",
-    "precommit": "yarn run test"
+    "precommit": "npm run test"
   },
   "standard": {
     "ignore": [

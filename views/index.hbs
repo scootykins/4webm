@@ -2,15 +2,6 @@
 <html>
   <head>
     <title>4webm</title>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107224177-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-107224177-2');
-    </script>
     <link rel="shortcut icon" type="image/x-icon" href="{{favicon}}"/>
     <link rel="stylesheet" href="{{global_style}}" />
     <link rel="stylesheet" href="{{style}}" />
@@ -24,7 +15,8 @@
       <div class="boardSubtitle">
         Load and play all webms in a 4chan thread (highly recommend /wsg/ threads)<br />
         4webm, nor its creator, are associated with 4chan.org<br />
-        Please consider giving me a <a href="https://github.com/ScottyFillups/4chan-webm-player">star</a> :)
+        Please consider giving me a <a href="https://github.com/ScottyFillups/4chan-webm-player">star</a> :)<br />
+        Want something added? Feel free to leave a feature request <a href="https://github.com/scootykins/4webm/issues">here!</a> Love ya &lt;3
       </div>
     </div>
     <hr class="abovePostForm" />
@@ -37,10 +29,15 @@
     </form>
     <hr />
     <div class="globalMessage">
-      <h3>The 403 Forbidden errors should now be fixed. If not, please make a <a href="https://github.com/ScottyFillups/4webm/issues">Github issue</a></h3>
-      {{#each messages}}
-        <h3>{{this}}</h3>
-      {{/each}}
+      <h3>**Update** I'm building a site called <a href="https://tutturu.tv">tutturu.tv</a> that lets you watch anything with friends together; you should check it out! :)</h3>
+    </div>
+    <div style="text-align: center">
+      <p style="font-size: 14px; font-weight: bold; margin: 0; margin-bottom: 10px;">
+        You can also load a thread by replacing '4chan' with '4webm' in a thread URL and visiting it,
+      </p>
+      <p style="font-size: 14px; font-weight: bold; margin: 0; margin-bottom: 10px;">
+        Keyboard shortcuts: Left/right -&gt; prev/next, up/down -&gt; volume, spacebar -&gt; pause/play, l -&gt; loop, f -&gt; fullscreen
+      </p>
     </div>
     <hr />
     <div class='body-cnt'>
