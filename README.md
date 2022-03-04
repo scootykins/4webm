@@ -35,6 +35,37 @@ $ npm run start
 
 Once you do that, you should be able to access the application at `http://localhost:8080`
 
+## Running inside a Docker container
+
+It is also is possible to install 4webm inside a Docker container.
+
+### Build an image
+
+First let's create a docker image:
+
+```bash
+# Clone this repo
+git clone https://github.com/scootykins/4webm.git 
+
+# Enter the repo folder
+cd 4webm
+
+# Create an image:
+docker build . -t "$USER/node-4webm"
+```
+### Run 4webm container
+
+Now is possible to start a 4webm container:
+
+```bash
+# Map a local port (49161) to the container port (8080)
+# and start a new container in detached mode.
+docker run -p 49161:8080 --rm -d "$USER/node-4webm"
+```
+
+To use the 4web app just go to any browser and write `http://localhost:49161`.
+
+The container will be deleted by the command `docker container stop <CONTAINER ID (do 'docker ps' to get it.) >` or by turning off your computer. Otherwise the container will be running as a backgroud job.
 
 ## Disclaimer
 
