@@ -50,8 +50,8 @@ git clone https://github.com/scootykins/4webm.git
 # Enter the repo folder
 cd 4webm
 
-# Create an image (replace <USER> with your local user name)
-docker build . -t <USER>/node-4webm
+# Create an image:
+docker build . -t "$USER/node-4webm"
 ```
 ## Run 4webm container
 
@@ -60,7 +60,7 @@ Now is possible to start a 4webm container:
 ```bash
 # Map a local port (49161) to the container port (8080)
 # and start a new container in detached mode.
-docker run -p 49161:8080 --rm -d <USER>/node-4webm
+docker run -p 49161:8080 --rm -d "$USER/node-4webm"
 ```
 
 To use the 4web app just go to any browser and write `http://localhost:49161`.
