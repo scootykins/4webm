@@ -22,7 +22,7 @@
     "4chan-list-webm": "^4.0.0",
     "bottleneck": "^2.0.1",
     "download": "^6.2.5",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "express-sslify": "^1.2.0",
     "fs-extra": "^5.0.0",
     "hbs": "^4.0.1"
