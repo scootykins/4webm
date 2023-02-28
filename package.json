@@ -25,7 +25,7 @@
     "express": "^4.16.2",
     "express-sslify": "^1.2.0",
     "fs-extra": "^5.0.0",
-    "hbs": "^4.0.1"
+    "hbs": "^4.2.0"
   },
   "devDependencies": {
     "axios": "^0.17.1",
